@@ -1,4 +1,10 @@
 Main menu
 ->
-susanoo.png 0.0 0.0
-dwarvesmeme.png 500.0 200.0
+s susanoo.png 0.0 0.0
+s dwarvesmeme.png 500.0 200.0
+t Ubuntu/Ubuntu-Regular.ttf 200 20 40 255 255 255
+lowercase regular white text
+t Ubuntu/Ubuntu-Italic.ttf 200 80 40 80 200 80
+lowercase italic green text
+t Ubuntu/Ubuntu-Bold.ttf 200 140 40 255 80 255
+UPPERCASE BOLD PURPLE TEXT

@@ -1,10 +1,14 @@
 Main menu
 ->
-s susanoo.png 0.0 0.0
-s dwarvesmeme.png 500.0 200.0
-t Ubuntu/Ubuntu-Regular.ttf 200 20 40 255 255 255
-lowercase regular white text
-t Ubuntu/Ubuntu-Italic.ttf 200 80 40 80 200 80
-lowercase italic green text
-t Ubuntu/Ubuntu-Bold.ttf 200 140 40 255 80 255
-UPPERCASE BOLD PURPLE TEXT
+s bg-1.png 0 0
+t Ubuntu/Ubuntu-Regular.ttf 500 200 200 255 255 255
+THE GAME
+s button-1.png 700 500
+t Ubuntu/Ubuntu-Regular.ttf 860 512 80 0 0 0
+PLAY
+s button-1.png 700 700
+t Ubuntu/Ubuntu-Regular.ttf 800 712 80 0 0 0
+SETTINGS
+s button-1.png 700 900
+t Ubuntu/Ubuntu-Regular.ttf 860 912 80 0 0 0
+QUIT

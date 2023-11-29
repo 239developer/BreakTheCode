@@ -24,23 +24,12 @@ std::vector<float> ObjectLoader::extractCoordinates(std::string const & str, std
     {
         std::size_t const m = str.find_first_not_of(digits_, n);
         std::string x = str.substr(n, m != std::string::npos ? m-n : m);
-        if(x != "-")
-        {
-            coordinates.push_back(std::stof(x));
-            count++;
-        }
+        coordinates.push_back(std::stof(x));
         std::vector<float> nextCoordinates = extractCoordinates(str, m, count - 1);
         coordinates.insert(coordinates.end(), nextCoordinates.begin(), nextCoordinates.end());
     }
 
     return coordinates;
-}
-
-void ObjectLoader::placeTransformable(std::shared_ptr<sf::Transformable> transform, std::string line)
-{
-    std::vector<float> v = extractCoordinates(line);
-    const sf::Vector2f pos(v[0], v[1]);
-    transform->setPosition(pos);
 }
 
 void ObjectLoader::loadSprite(std::shared_ptr<Scene> scene, std::string line)
@@ -56,7 +45,7 @@ void ObjectLoader::loadSprite(std::shared_ptr<Scene> scene, std::string line)
     const sf::Texture& const_texture = *scene->textures.back();
     sprite->setTexture(const_texture);
     
-    std::vector<float> v = extractCoordinates(line);   // extracts just 2 coordinates representing position
+    std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos));   // extracts just 2 coordinates representing position
     const sf::Vector2f pos(v[0], v[1]);
     sprite->setPosition(pos);
     
@@ -76,10 +65,10 @@ void ObjectLoader::loadText(std::shared_ptr<Scene> scene, std::string line, std:
     const sf::Font& const_font = *scene->fonts.back();
     text->setFont(const_font);
 
-    std::vector<float> v = extractCoordinates(line, 0, 5);  // extracts 6 coordinates:
-    const sf::Vector2f pos(v[0], v[1]);                     // 2 for position
-    unsigned int size = (unsigned int)v[2];                 // 1 for font size (px)
-    sf::Uint8 r = (sf::Uint8)v[3];                          // 3 for color (r, g, b)
+    std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 5);  // extracts 6 coordinates:
+    const sf::Vector2f pos(v[0], v[1]);          // 2 for position
+    unsigned int size = (unsigned int)v[2];      // 1 for font size (px)
+    sf::Uint8 r = (sf::Uint8)v[3];               // 3 for color (r, g, b)
     sf::Uint8 g = (sf::Uint8)v[4];
     sf::Uint8 b = (sf::Uint8)v[5];
     const sf::Color color(r, g, b);          

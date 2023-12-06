@@ -1,4 +1,6 @@
 #include "ObjectLoader.h"
+#include "../GameObject/TextComponent.h"
+#include "../GameObject/SpriteComponent.h"
 #include <iostream>
 
 void ObjectLoader::replaceAll(std::string& str, const std::string& from, const std::string& to)
@@ -32,53 +34,64 @@ std::vector<float> ObjectLoader::extractCoordinates(std::string const & str, std
     return coordinates;
 }
 
-void ObjectLoader::loadSprite(std::shared_ptr<Scene> scene, std::string line)
+void ObjectLoader::loadSprite(GameObject* parent, std::string line)
 {
+    SpriteComponent* component = new SpriteComponent(parent);
     std::string texturePath = line.substr(0, line.find_first_of(" "));
-    std::shared_ptr<sf::Texture> texture(new sf::Texture());
-    if(texture->loadFromFile("../assets/textures/" + texturePath));
-        std::cout << "Loaded texture: [" << texturePath << "]" << "\n";
+    sf::Texture* texture = new sf::Texture();
+    try
+    {
+        texture->loadFromFile("../assets/textures/" + texturePath);
+        std::cout << "Loaded texture: [" << texturePath << "]\n";
+        sf::Sprite* sprite = new sf::Sprite();
+        sprite->setTexture(*texture);
 
-    scene->textures.push_back(texture);
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos));   // extracts just 2 coordinates representing position
+        const sf::Vector2f pos(v[0], v[1]);
 
-    std::shared_ptr<sf::Sprite> sprite(new sf::Sprite());
-    const sf::Texture& const_texture = *scene->textures.back();
-    sprite->setTexture(const_texture);
-    
-    std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos));   // extracts just 2 coordinates representing position
-    const sf::Vector2f pos(v[0], v[1]);
-    sprite->setPosition(pos);
-    
-    scene->sprites.push_back(sprite);
+        sprite->setPosition(pos);
+
+        component->setSprite(sprite, texture);
+        parent->addComponent((Component*)component);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << "\n";
+    }
 }
 
-void ObjectLoader::loadText(std::shared_ptr<Scene> scene, std::string line, std::string textStr)
+void ObjectLoader::loadText(GameObject* parent, std::string line, std::string textStr)
 {
+    TextComponent* component = new TextComponent(parent);
     std::string fontPath = line.substr(0, line.find_first_of(" "));
-    std::shared_ptr<sf::Font> font(new sf::Font());
-    if(font->loadFromFile("../assets/fonts/" + fontPath));
-        std::cout << "Loaded font: [" << fontPath << "]" << "\n";
+    sf::Font* font(new sf::Font());
+    try
+    {
+        font->loadFromFile("../assets/fonts/" + fontPath);
+        std::cout << "Loaded font: [" << fontPath << "]\n";
+        sf::Text* text = new sf::Text();
+        text->setFont(*font);
 
-    scene->fonts.push_back(font);
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 5);  // extracts 6 coordinates:
+        const sf::Vector2f pos(v[0], v[1]);          // 2 for position
+        unsigned int size = (unsigned int)v[2];      // 1 for font size (px)
+        sf::Uint8 r = (sf::Uint8)v[3];               // 3 for color (r, g, b)
+        sf::Uint8 g = (sf::Uint8)v[4];
+        sf::Uint8 b = (sf::Uint8)v[5];
+        const sf::Color color(r, g, b);   
 
-    std::shared_ptr<sf::Text> text(new sf::Text());
-    const sf::Font& const_font = *scene->fonts.back();
-    text->setFont(const_font);
+        text->setPosition(pos);
+        text->setCharacterSize(size);
+        text->setFillColor(color);
 
-    std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 5);  // extracts 6 coordinates:
-    const sf::Vector2f pos(v[0], v[1]);          // 2 for position
-    unsigned int size = (unsigned int)v[2];      // 1 for font size (px)
-    sf::Uint8 r = (sf::Uint8)v[3];               // 3 for color (r, g, b)
-    sf::Uint8 g = (sf::Uint8)v[4];
-    sf::Uint8 b = (sf::Uint8)v[5];
-    const sf::Color color(r, g, b);          
+        replaceAll(textStr, "\\n", "\n");
+        text->setString(textStr);
 
-    text->setPosition(pos); // apply extracted numbers
-    text->setCharacterSize(size);
-    text->setFillColor(color);
-
-    replaceAll(textStr, "\\n", "\n");
-    text->setString(textStr);
-
-    scene->texts.push_back(text);
+        component->setText(text, font);
+        parent->addComponent((Component*)component);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << "\n";
+    }
 }

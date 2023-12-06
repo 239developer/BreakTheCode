@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "GameObject/GameObject.h"
 #include "SceneManager.h"
 
 const int SceneManager::NAME_SECTION = 0;
@@ -9,7 +10,7 @@ const char SceneManager::LOAD_TEXT = 't';
 
 void SceneManager::unloadScene()
 {
-
+    
 }
 
 void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
@@ -20,10 +21,11 @@ void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
 void SceneManager::drawScene(sf::RenderWindow& window)
 {
     window.setTitle(currentScene.name());
-    for(std::shared_ptr<sf::Sprite> sprite : currentScene.sprites)
-        window.draw(*sprite);
-    for(std::shared_ptr<sf::Text> text : currentScene.texts)
-        window.draw(*text);
+    window.setTitle(currentScene.name());
+    for(GameObject* obj : currentScene.objects)
+    {
+        obj->draw(window);
+    }
 }
 
 std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
@@ -52,17 +54,19 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                 scene->setName(nextLine);
                 break;
             case OBJECTS_SECTION:
+                GameObject* nextObj = new GameObject();
                 switch(c)
-                {  
+                {   
                     case LOAD_SPRITE:
-                        loader.loadSprite(scene, nextLine);
+                        loader.loadSprite(nextObj, nextLine);
                         break;
                     case LOAD_TEXT:
                         std::string textStr;
                         std::getline(sceneFile, textStr);
-                        loader.loadText(scene, nextLine, textStr);
+                        loader.loadText(nextObj, nextLine, textStr);
                         break;
                 }
+                scene->objects.push_back(nextObj);
                 break;
         }
     }

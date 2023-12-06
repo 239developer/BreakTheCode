@@ -1,7 +1,7 @@
 Main menu
 ->
 s bg-1.png 0 0
-t Ubuntu/Ubuntu-Regular.ttf 500 200 200 255 255 255
+t Ubuntu/Ubuntu-Bold.ttf 400 200 200 255 255 255
 THE GAME
 s button-1.png 700 500
 t Ubuntu/Ubuntu-Regular.ttf 860 512 80 0 0 0

@@ -21,7 +21,6 @@ void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
 void SceneManager::drawScene(sf::RenderWindow& window)
 {
     window.setTitle(currentScene.name());
-    window.setTitle(currentScene.name());
     for(GameObject* obj : currentScene.objects)
     {
         obj->draw(window);

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Component.h"
 
-class SpriteComponent : Component
+class SpriteComponent : public Component
 {
     private:
         sf::Texture* texture;

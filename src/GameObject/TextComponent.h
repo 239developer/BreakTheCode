@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Component.h"
 
-class TextComponent : Component
+class TextComponent : public Component
 {
     private:
         sf::Font* font;

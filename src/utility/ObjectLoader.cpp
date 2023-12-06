@@ -52,7 +52,7 @@ void ObjectLoader::loadSprite(GameObject* parent, std::string line)
         sprite->setPosition(pos);
 
         component->setSprite(sprite, texture);
-        parent->addComponent((Component*)component);
+        parent->addComponent(component);
     }
     catch(const std::exception& e)
     {
@@ -88,7 +88,7 @@ void ObjectLoader::loadText(GameObject* parent, std::string line, std::string te
         text->setString(textStr);
 
         component->setText(text, font);
-        parent->addComponent((Component*)component);
+        parent->addComponent(component);
     }
     catch(const std::exception& e)
     {

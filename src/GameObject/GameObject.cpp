@@ -2,11 +2,13 @@
 #include "TextComponent.h"
 #include "SpriteComponent.h"
 
+#include <iostream>
+
 template <typename T>
-T* GameObject::getComponent()
+inline T* GameObject::getComponent()
 {
     T* result = nullptr;
-    for(Component * c : components)
+    for(Component* c : components)
     {
         result = dynamic_cast<T*>(c);
         if(result)

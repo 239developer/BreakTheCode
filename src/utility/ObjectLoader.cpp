@@ -1,7 +1,10 @@
 #include "ObjectLoader.h"
 #include "../GameObject/TextComponent.h"
 #include "../GameObject/SpriteComponent.h"
+#include "../GameObject/SceneChanger.h"
 #include <iostream>
+
+const char BUTTON_SCENECAHNGER = 'c';
 
 void ObjectLoader::replaceAll(std::string& str, const std::string& from, const std::string& to)
 {
@@ -36,7 +39,7 @@ std::vector<float> ObjectLoader::extractCoordinates(std::string const & str, std
 
 void ObjectLoader::loadSprite(GameObject* parent, std::string line)
 {
-    SpriteComponent* component = new SpriteComponent(parent);
+    SpriteComponent* component = new SpriteComponent();
     std::string texturePath = line.substr(0, line.find_first_of(" "));
     sf::Texture* texture = new sf::Texture();
     try
@@ -62,7 +65,7 @@ void ObjectLoader::loadSprite(GameObject* parent, std::string line)
 
 void ObjectLoader::loadText(GameObject* parent, std::string line, std::string textStr)
 {
-    TextComponent* component = new TextComponent(parent);
+    TextComponent* component = new TextComponent();
     std::string fontPath = line.substr(0, line.find_first_of(" "));
     sf::Font* font(new sf::Font());
     try
@@ -89,6 +92,30 @@ void ObjectLoader::loadText(GameObject* parent, std::string line, std::string te
 
         component->setText(text, font);
         parent->addComponent(component);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << "\n";
+    }
+}
+
+void ObjectLoader::loadButton(GameObject* parent, std::string line)
+{
+    try
+    {
+        SpriteComponent* spriteComp = parent->getComponent<SpriteComponent>();
+
+        char c = line[0];
+        line.erase(0, 2);
+        switch(c)
+        {
+            case BUTTON_SCENECAHNGER:
+                SceneChanger* button = new SceneChanger();
+                button->setScene(line);
+                parent->addComponent(button);
+                break;
+        }
+        // std::cout << "Loaded a button\n";
     }
     catch(const std::exception& e)
     {

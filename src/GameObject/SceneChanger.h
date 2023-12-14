@@ -8,6 +8,6 @@ class SceneChanger : public Button
         std::string sceneFileName;
     public:
         using Button::Button;
-        void onPress();
         void setScene(std::string);
+        void press() override;
 };

@@ -1,11 +1,13 @@
 #include "Component.h"
 
-Component::Component (GameObject* p)
+Component::Component() { }
+
+Component::~Component() {}
+
+void Component::setParent(GameObject* p)
 {
     parent = p;
 }
-
-Component::~Component() {}
 
 GameObject * Component::getParent()
 {

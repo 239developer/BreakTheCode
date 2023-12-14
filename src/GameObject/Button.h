@@ -5,9 +5,10 @@
 class Button : public Component
 {
     protected:
-        sf::IntRect bounds;
+        sf::FloatRect bounds;
     public:
         using Component::Component;
-        virtual void onPress();
         bool isPressed();
+        virtual void press();
+        void setParent(GameObject* p) override;
 };

@@ -3,10 +3,11 @@
 #include "GameObject/GameObject.h"
 #include "SceneManager.h"
 
-const int SceneManager::NAME_SECTION = 0;
-const int SceneManager::OBJECTS_SECTION = 1;
-const char SceneManager::LOAD_SPRITE = 's';
-const char SceneManager::LOAD_TEXT = 't';
+const int NAME_SECTION = 0;
+const int OBJECTS_SECTION = 1;
+const char LOAD_SPRITE = 's';
+const char LOAD_TEXT = 't';
+const char LOAD_ANIMATION = 'a';
 
 void SceneManager::unloadScene()
 {

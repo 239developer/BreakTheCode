@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "TextComponent.h"
-#include "SpriteComponent.h"
+#include "AnimationComponent.h"
 
 #include <iostream>
 
@@ -24,6 +24,10 @@ void GameObject::addComponent(Component* c)
 
 void GameObject::draw(sf::RenderWindow& window)
 {
+    AnimationComponent* animComp = getComponent<AnimationComponent>();
+    if(animComp)
+        animComp->update();
+
     TextComponent* textComp = getComponent<TextComponent>();
     if(textComp)
         window.draw(*textComp->getText());

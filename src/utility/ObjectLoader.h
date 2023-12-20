@@ -12,4 +12,5 @@ class ObjectLoader
     public:
         void loadSprite(GameObject* parent, std::string line);
         void loadText(GameObject* parent, std::string line, std::string textStr);
+        void loadAnimation(GameObject*, std::string, std::vector<std::string>);
 };

@@ -10,3 +10,8 @@ sf::Sprite* SpriteComponent::getSprite()
 {
     return sprite;
 }
+
+sf::Texture* SpriteComponent::getTexture()
+{
+    return texture;
+}

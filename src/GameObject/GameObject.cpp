@@ -28,11 +28,16 @@ void GameObject::draw(sf::RenderWindow& window)
 {
     AnimationComponent* animComp = getComponent<AnimationComponent>();
     if(animComp)
+    {
         animComp->update();
-  
-    SpriteComponent* spriteComp = getComponent<SpriteComponent>();
-    if(spriteComp)
-        window.draw(*spriteComp->getSprite());
+        window.draw(*animComp->getSprite());
+    }
+    else
+    {
+        SpriteComponent* spriteComp = getComponent<SpriteComponent>();
+        if(spriteComp)
+            window.draw(*spriteComp->getSprite());
+    }
 
     TextComponent* textComp = getComponent<TextComponent>();
     if(textComp)

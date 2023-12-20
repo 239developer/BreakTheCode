@@ -57,6 +57,8 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
             char c = nextLine[0];
             if(nextLine.size() > 2) nextLine = nextLine.substr(2);
             std::string textStr;
+            std::vector<std::string> lines;
+            int x;
 
             switch(syntaxCounter)
             {
@@ -79,6 +81,18 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                             break;
                         case LOAD_BUTTON:
                             loader.loadButton(nextObj, nextLine);
+                            break;
+                        case LOAD_ANIMATION:
+                            textStr = nextLine.substr(0, nextLine.find_first_of(" "));
+                            x = std::stof(textStr);
+                            for(int i = 0; i < x; i++)
+                            {
+                                std::getline(sceneFile, textStr);
+                                lines.push_back(textStr);
+                            }
+                            nextLine = nextLine.substr(nextLine.find_first_of(" ") + 1);
+                            loader.loadAnimation(nextObj, nextLine, lines);
+                            lines.clear();
                             break;
                     }
                     break;

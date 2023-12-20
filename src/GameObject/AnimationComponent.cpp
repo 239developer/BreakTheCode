@@ -1,26 +1,42 @@
 #include "AnimationComponent.h"
+#include <iostream>
 
-void AnimationComponent::setAnimation(sf::Image* t, sf::IntRect* b, int* f)
+void AnimationComponent::setAnimation(sf::Image* t, sf::IntRect b[], int f[])
 {
     atlas = t;
     textureBounds = b;
     timecodes = f;
-    maxID = sizeof(timecodes) / sizeof(int) - 1;
+    maxID = sizeof(timecodes) / sizeof(int);
+    std::cout << f[0] << " " << timecodes[0] << " " << maxID << "\n";
     currentID = 0;
     currentFrame = 0;
-    texture->loadFromImage(*atlas, textureBounds[currentID]);
+
+    texture = new sf::Texture();
+    sprite = new sf::Sprite();
+    sf::IntRect bounds = textureBounds[currentID];
+    texture->loadFromImage(*atlas, bounds);
+    sprite->setTexture(*texture);
+    std::cout << currentID << " " << timecodes[currentID] - currentFrame << " " << currentFrame << "\n";
+    update();
 }
 
 void AnimationComponent::update()
 {
-    if((loop || playing) && (++currentFrame >= timecodes[currentID]))
+    if(loop || playing)
     {
-        if(++currentID > maxID)
+        std::cout << currentID << " " << timecodes[currentID] - currentFrame << " " << currentFrame << "\n";
+        if(++currentFrame >= timecodes[currentID])
         {
-            currentID = 0;
-            currentFrame = 0;
+            if(++currentID > maxID)
+            {
+                currentID = 0;
+                currentFrame = 0;
+            }
+            texture->~Texture();
+            texture = new sf::Texture();
+            texture->loadFromImage(*atlas, textureBounds[currentID]);
+            sprite->setTexture(*texture);
         }
-        texture->loadFromImage(*atlas, textureBounds[currentID]);
     }
     if(currentFrame == 0)
         playing = false;

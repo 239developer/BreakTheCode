@@ -18,3 +18,8 @@ s button-1.png 700 900
 t Ubuntu/Ubuntu-Regular.ttf 860 912 80 0 0 0
 QUIT
 =
+a 3 garland.png 0 0
+30 0 0 1920 200
+60 0 200 1920 200
+90 0 400 1920 200
+=

@@ -11,4 +11,5 @@ class SpriteComponent : public Component
         using Component::Component;
         void setSprite(sf::Sprite*, sf::Texture*);
         sf::Sprite* getSprite();
+        sf::Texture* getTexture();
 };

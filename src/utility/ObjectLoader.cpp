@@ -101,7 +101,7 @@ void ObjectLoader::loadText(GameObject* parent, std::string line, std::string te
 
 void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vector<std::string> lines)
 {
-    AnimationComponent* component = new AnimationComponent(parent);
+    AnimationComponent* component = new AnimationComponent();
     std::string atlasPath = line.substr(0, line.find_first_of(" "));
     sf::Image* image(new sf::Image());
     try
@@ -114,13 +114,17 @@ void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vect
         for(std::string str : lines)
         {
             std::vector<float> v = extractCoordinates(str, 0, 4);
-            sf::IntRect rect((int)v[0], (int)v[1], (int)v[2], (int)v[3]);
-            int timecode = (int)v[4];
+            sf::IntRect rect((int)v[1], (int)v[2], (int)v[3], (int)v[4]);
+            int timecode = (int)v[0];
             textureBounds.push_back(rect);
             timecodes.push_back(timecode);
         }
 
         component->setAnimation(image, textureBounds.data(), timecodes.data());
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos));   // extracts just 2 coordinates representing position
+        const sf::Vector2f pos(v[0], v[1]);
+        component->getSprite()->setPosition(pos);
+        component->setLoop(true);
         parent->addComponent(component);
     }
     catch(const std::exception& e)

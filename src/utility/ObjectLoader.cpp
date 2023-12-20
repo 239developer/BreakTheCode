@@ -1,10 +1,10 @@
 #include "ObjectLoader.h"
 #include "../GameObject/TextComponent.h"
-#include "../GameObject/SpriteComponent.h"
+#include "../GameObject/AnimationComponent.h"
 #include "../GameObject/SceneChanger.h"
 #include <iostream>
 
-const char BUTTON_SCENECAHNGER = 'c';
+const char BUTTON_SCENECHANGER = 'c';
 
 void ObjectLoader::replaceAll(std::string& str, const std::string& from, const std::string& to)
 {
@@ -99,6 +99,36 @@ void ObjectLoader::loadText(GameObject* parent, std::string line, std::string te
     }
 }
 
+void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vector<std::string> lines)
+{
+    AnimationComponent* component = new AnimationComponent(parent);
+    std::string atlasPath = line.substr(0, line.find_first_of(" "));
+    sf::Image* image(new sf::Image());
+    try
+    {
+        image->loadFromFile("../assets/atlases/" + atlasPath);
+        std::cout << "Loaded atlas: [" << atlasPath << "]\n";
+        std::vector<sf::IntRect> textureBounds;
+        std::vector<int> timecodes;
+
+        for(std::string str : lines)
+        {
+            std::vector<float> v = extractCoordinates(str, 0, 4);
+            sf::IntRect rect((int)v[0], (int)v[1], (int)v[2], (int)v[3]);
+            int timecode = (int)v[4];
+            textureBounds.push_back(rect);
+            timecodes.push_back(timecode);
+        }
+
+        component->setAnimation(image, textureBounds.data(), timecodes.data());
+        parent->addComponent(component);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << e.what() << "\n";
+    }
+}
+
 void ObjectLoader::loadButton(GameObject* parent, std::string line)
 {
     try
@@ -109,7 +139,7 @@ void ObjectLoader::loadButton(GameObject* parent, std::string line)
         line.erase(0, 2);
         switch(c)
         {
-            case BUTTON_SCENECAHNGER:
+            case BUTTON_SCENECHANGER:
                 SceneChanger* button = new SceneChanger();
                 button->setScene(line);
                 parent->addComponent(button);

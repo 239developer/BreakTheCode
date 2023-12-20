@@ -9,6 +9,7 @@ const char END_OBJECT = '=';
 const char LOAD_SPRITE = 's';
 const char LOAD_TEXT = 't';
 const char LOAD_BUTTON = 'b';
+const char LOAD_ANIMATION = 'a';
 
 std::shared_ptr<Scene> SceneManager::currentScene;
 

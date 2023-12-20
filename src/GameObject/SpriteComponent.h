@@ -4,7 +4,7 @@
 
 class SpriteComponent : public Component
 {
-    private:
+    protected:
         sf::Texture* texture;
         sf::Sprite* sprite;
     public:

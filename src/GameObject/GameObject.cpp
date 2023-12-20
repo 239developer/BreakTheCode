@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "AnimationComponent.h"
+#include "SceneChanger.h"
 
 #include <iostream>
 
@@ -19,6 +20,7 @@ inline T* GameObject::getComponent()
 
 void GameObject::addComponent(Component* c)
 {
+    c->setParent(this);
     components.push_back(c);
 }
 
@@ -27,14 +29,26 @@ void GameObject::draw(sf::RenderWindow& window)
     AnimationComponent* animComp = getComponent<AnimationComponent>();
     if(animComp)
         animComp->update();
-
-    TextComponent* textComp = getComponent<TextComponent>();
-    if(textComp)
-        window.draw(*textComp->getText());
-
+  
     SpriteComponent* spriteComp = getComponent<SpriteComponent>();
     if(spriteComp)
         window.draw(*spriteComp->getSprite());
+
+    TextComponent* textComp = getComponent<TextComponent>();
+    if(textComp)
+    {
+        window.draw(*textComp->getText());
+    }
+}
+
+void GameObject::handleEvents()
+{
+    Button* button = getComponent<Button>();
+    if(button)
+    {
+        if(button->isPressed())
+            button->press();
+    }
 }
 
 GameObject::GameObject() {}

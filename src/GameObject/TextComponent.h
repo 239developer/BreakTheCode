@@ -4,11 +4,11 @@
 
 class TextComponent : public Component
 {
-    private:
+    protected:
         sf::Font* font;
         sf::Text* text;
     public:
         using Component::Component;
-        void setText(sf::Text*, sf::Font*);
+        virtual void setText(sf::Text*, sf::Font*);
         sf::Text* getText();
 };

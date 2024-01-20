@@ -7,8 +7,8 @@ class AnimationComponent : public SpriteComponent
 {
     private:
         sf::Image* atlas;
-        sf::IntRect* textureBounds;
-        int* timecodes; 
+        std::vector<sf::IntRect> textureBounds;
+        std::vector<int> timecodes; 
         int maxID;
         int currentID;
         int currentFrame;
@@ -16,8 +16,8 @@ class AnimationComponent : public SpriteComponent
         bool loop;
     public:   
         using SpriteComponent::SpriteComponent;   
-        void setAnimation(sf::Image*, sf::IntRect [], int []);
-        void update(); //returns (new) current frame
+        void setAnimation(sf::Image*, std::vector<sf::IntRect>, std::vector<int>);
+        void update(); 
         void setLoop(bool);
-        void setFrame(int);
+        void setID(int);
 };

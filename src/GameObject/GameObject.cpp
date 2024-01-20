@@ -2,6 +2,7 @@
 #include "TextComponent.h"
 #include "AnimationComponent.h"
 #include "SceneChanger.h"
+#include "TextEditor.h"
 
 #include <iostream>
 
@@ -36,13 +37,24 @@ void GameObject::draw(sf::RenderWindow& window)
     {
         SpriteComponent* spriteComp = getComponent<SpriteComponent>();
         if(spriteComp)
+        {
             window.draw(*spriteComp->getSprite());
+        }
     }
 
-    TextComponent* textComp = getComponent<TextComponent>();
-    if(textComp)
+    TextEditor* editor = getComponent<TextEditor>();
+    if(editor)
     {
-        window.draw(*textComp->getText());
+        window.draw(*editor->getSelectionRect());
+        window.draw(*editor->getText());
+    }
+    else
+    {
+        TextComponent* textComp = getComponent<TextComponent>();
+        if(textComp)
+        {
+            window.draw(*textComp->getText());
+        }
     }
 }
 

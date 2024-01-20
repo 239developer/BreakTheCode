@@ -120,7 +120,7 @@ void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vect
             timecodes.push_back(timecode);
         }
 
-        component->setAnimation(image, textureBounds.data(), timecodes.data());
+        component->setAnimation(image, textureBounds, timecodes);
         std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos));   // extracts just 2 coordinates representing position
         const sf::Vector2f pos(v[0], v[1]);
         component->getSprite()->setPosition(pos);

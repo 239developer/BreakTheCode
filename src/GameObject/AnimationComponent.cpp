@@ -1,12 +1,12 @@
 #include "AnimationComponent.h"
 #include <iostream>
 
-void AnimationComponent::setAnimation(sf::Image* t, sf::IntRect b[], int f[])
+void AnimationComponent::setAnimation(sf::Image* t, std::vector<sf::IntRect> b, std::vector<int> f)
 {
     atlas = t;
     textureBounds = b;
     timecodes = f;
-    maxID = sizeof(timecodes) / sizeof(int);
+    maxID = timecodes.size();
     std::cout << f[0] << " " << timecodes[0] << " " << maxID << "\n";
     currentID = 0;
     currentFrame = 0;
@@ -16,15 +16,12 @@ void AnimationComponent::setAnimation(sf::Image* t, sf::IntRect b[], int f[])
     sf::IntRect bounds = textureBounds[currentID];
     texture->loadFromImage(*atlas, bounds);
     sprite->setTexture(*texture);
-    std::cout << currentID << " " << timecodes[currentID] - currentFrame << " " << currentFrame << "\n";
-    update();
 }
 
 void AnimationComponent::update()
 {
     if(loop || playing)
     {
-        std::cout << currentID << " " << timecodes[currentID] - currentFrame << " " << currentFrame << "\n";
         if(++currentFrame >= timecodes[currentID])
         {
             if(++currentID > maxID)
@@ -42,19 +39,12 @@ void AnimationComponent::update()
         playing = false;
 }
 
-void AnimationComponent::setFrame(int frame = 0)
+void AnimationComponent::setID(int id = 0)
 {
-    currentFrame = frame;
-    for(int i = 0; i <= maxID; i++)
-    {
-        if(currentFrame <= timecodes[i])
-        {
-            currentID = i;
-            return;
-        }
-    }
-    currentID = 0;
-    currentFrame = 0;
+    currentID = id;
+    if(currentID > maxID)
+        currentID = 0;
+    currentFrame = timecodes[currentID];
 }
 
 void AnimationComponent::setLoop(bool b = true)

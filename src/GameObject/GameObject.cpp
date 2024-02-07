@@ -45,7 +45,9 @@ void GameObject::draw(sf::RenderWindow& window)
     TextEditor* editor = getComponent<TextEditor>();
     if(editor)
     {
-        window.draw(*editor->getSelectionRect());
+        sf::RectangleShape* selRect = editor->getSelectionRect();
+        if(selRect)
+            window.draw(*selRect);
         window.draw(*editor->getText());
     }
     else
@@ -65,6 +67,15 @@ void GameObject::handleEvents()
     {
         if(button->isPressed())
             button->press();
+    }
+
+    TextEditor* teditor = getComponent<TextEditor>();
+    if(teditor)
+    {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            teditor->selectWord();
+        }
     }
 }
 

@@ -73,13 +73,13 @@ void TextEditor::setText(sf::Text* t, sf::Font* f)
 void TextEditor::selectWord()
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition();
-    int y = mousePos.y;
+    int y = mousePos.y - text->getPosition().y;
     int line = y / lineHeight + 1;
-    int x = mousePos.x;
+    int x = mousePos.x - text->getPosition().x;
     int character = x / charWidth + 1;
     int maxLine = linefeeds.size() + 1;
 
-    if(line <= maxLine)
+    if(line <= maxLine && line > 0)
     {
         std::string str;
         std::string substr;
@@ -88,7 +88,7 @@ void TextEditor::selectWord()
         int b = linefeeds[line] - linefeeds[line - 1] - 1;
         substr = str.substr(a, b);
         int maxChar = substr.size() + 1;
-        if(character <= maxChar)
+        if(character <= maxChar && character > 0)
         {
             char c = substr[character - 1];
             if(specialCharacters.find(c) == std::string::npos)

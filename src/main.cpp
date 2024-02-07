@@ -8,9 +8,9 @@ int main()
     sf::RenderWindow window(videoMode, "devbuild", sf::Style::Fullscreen);
     // window.setFramerateLimit(60);
 
-    SceneManager manager;
-    std::shared_ptr<Scene> mainScene = manager.createSceneFromFile("main.scene");
-    manager.loadScene(mainScene);
+    SceneManager* manager = new SceneManager();
+    std::shared_ptr<Scene> mainScene = manager->createSceneFromFile("main.scene");
+    manager->loadScene(mainScene);
 
     sf::Clock clock;
     float lastTime = 0.0f;
@@ -34,8 +34,8 @@ int main()
                 window.close();
             }
 
-            manager.drawScene(window);
-            manager.handleEvents();
+            manager->handleEvents();
+            manager->drawScene(window);
             window.display();
         }
     }

@@ -12,8 +12,11 @@ void SceneChanger::setScene(std::string str)
 
 void SceneChanger::press()
 {
-    SceneManager manager;
-    std::shared_ptr<Scene> scene = manager.createSceneFromFile(sceneFileName);
-    manager.loadScene(scene);
-    std::cout << "Switched scene to: [" << sceneFileName << "]\n";
+    manager->queueLoading(sceneFileName);
+    std::cout << "Queued load of a scene: [" << sceneFileName << "]\n";
+}
+
+void SceneChanger::setManager(SceneManager* man)
+{
+    manager = man;
 }

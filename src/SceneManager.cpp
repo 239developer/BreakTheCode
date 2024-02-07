@@ -10,8 +10,17 @@ const char LOAD_SPRITE = 's';
 const char LOAD_TEXT = 't';
 const char LOAD_BUTTON = 'b';
 const char LOAD_ANIMATION = 'a';
+const char LOAD_TEDITOR = 'n'; //n for notepad lol
 
 std::shared_ptr<Scene> SceneManager::currentScene;
+
+void SceneManager::queueLoading(std::string filename)
+{
+    std::cout << filename << "\n";
+    // this->sceneFileName = filename;
+    this->queuedNew = true;
+    std::cout << "yoooo\n";
+}
 
 void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
 {
@@ -33,6 +42,18 @@ void SceneManager::handleEvents()
     {
         obj->handleEvents();
     }
+    if(queuedNew)
+    {
+        queuedNew = false;
+        std::shared_ptr<Scene> newScene = createSceneFromFile(sceneFileName);
+        loadScene(newScene);
+    }
+}
+
+SceneManager::SceneManager()
+{
+    queuedNew = false;
+    sceneFileName = "settings.scene";
 }
 
 std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
@@ -78,6 +99,10 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                         case LOAD_TEXT:
                             std::getline(sceneFile, textStr);
                             loader.loadText(nextObj, nextLine, textStr);
+                            break;
+                        case LOAD_TEDITOR:
+                            std::getline(sceneFile, textStr);
+                            loader.loadTextEditor(nextObj, nextLine, textStr);
                             break;
                         case LOAD_BUTTON:
                             loader.loadButton(nextObj, nextLine);

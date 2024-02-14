@@ -12,8 +12,15 @@ void SceneChanger::setScene(std::string str)
 
 void SceneChanger::press()
 {
-    manager->queueLoading(sceneFileName);
-    std::cout << "Queued load of a scene: [" << sceneFileName << "]\n";
+    if(manager)
+    {
+        manager->queueLoading(sceneFileName);
+        std::cout << "Queued load of a scene: [" << sceneFileName << "]\n";
+    }
+    else
+    {
+        std::cout << "No SceneManager provided\n";
+    }
 }
 
 void SceneChanger::setManager(SceneManager* man)

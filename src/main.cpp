@@ -18,6 +18,7 @@ int main()
     float deltaTime = 0.0f;
     const float minFrameDuration = 1.0f / 60;
 
+
     while(window.isOpen())
     {
         currTime = clock.getElapsedTime().asSeconds();

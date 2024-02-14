@@ -16,10 +16,8 @@ std::shared_ptr<Scene> SceneManager::currentScene;
 
 void SceneManager::queueLoading(std::string filename)
 {
-    std::cout << filename << "\n";
-    // this->sceneFileName = filename;
-    this->queuedNew = true;
-    std::cout << "yoooo\n";
+    sceneFileName = filename;
+    queuedNew = true;
 }
 
 void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
@@ -54,6 +52,7 @@ SceneManager::SceneManager()
 {
     queuedNew = false;
     sceneFileName = "settings.scene";
+    loader.setManager(this);
 }
 
 std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)

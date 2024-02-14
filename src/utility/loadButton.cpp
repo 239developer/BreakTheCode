@@ -18,6 +18,7 @@ void ObjectLoader::loadButton(GameObject* parent, std::string line)
             case BUTTON_SCENECHANGER:
                 SceneChanger* button = new SceneChanger();
                 button->setScene(line);
+                button->setManager(manager);
                 parent->addComponent(button);
                 break;
         }

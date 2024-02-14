@@ -1,6 +1,11 @@
 #include "ObjectLoader.h"
 #include <iostream>
 
+void ObjectLoader::setManager(SceneManager* man)
+{
+    manager = man;
+}
+
 void ObjectLoader::replaceAll(std::string& str, const std::string& from, const std::string& to)
 {
     if(from.empty())

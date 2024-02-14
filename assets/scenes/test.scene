@@ -1,10 +1,10 @@
 TEST SCENE
 ->
-t Ubuntu/Ubuntu-Italic.ttf 820 512 80 255 255 255
-well...
-=
 s button-1.png 50 50
 b c main.scene
 t Ubuntu/Ubuntu-Regular.ttf 100 50 80 0 0 0
 go back
+=
+n ShareTechMono/ShareTechMono-Regular.ttf 500 400 32 100 255 80 900
+TemplateProgram\n{\n    some_variable = 1;\n    do_stuff()\n    {\n        some_variable = 2;\n    }\n    undo_stuff()\n    {\n        some_variable = 1;\n    }\n}
 =

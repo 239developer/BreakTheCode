@@ -1,0 +1,14 @@
+TemplateProgram
+{
+    some_variable = 1;
+
+    do_stuff()
+    {
+        some_variable = 2;
+    }
+
+    undo_stuff()
+    {
+        some_variable = 1;
+    }
+}

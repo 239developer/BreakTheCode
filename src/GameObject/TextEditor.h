@@ -5,8 +5,8 @@ class TextEditor : public TextComponent  //depends on the font being monospaced
 {
     private:
         int maxWidth;
-        std::vector<size_t> spaces;
-        std::vector<size_t> linefeeds;
+        std::vector<int> spaces;
+        std::vector<int> linefeeds;
         int charWidth;
         int lineHeight;
         sf::RectangleShape* selectionRect;

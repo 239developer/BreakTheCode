@@ -48,6 +48,8 @@ void GameObject::draw(sf::RenderWindow& window)
         sf::RectangleShape* selRect = editor->getSelectionRect();
         if(selRect)
             window.draw(*selRect);
+        // else
+        //     std::cout << "no rect\n";
         window.draw(*editor->getText());
     }
     else

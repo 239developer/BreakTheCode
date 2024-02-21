@@ -3,6 +3,8 @@
 #include "AnimationComponent.h"
 #include "SceneChanger.h"
 #include "TextEditor.h"
+#include "../Gameplay/Engine/Transform.h"
+#include "../Gameplay/Player/PlayerController.h"
 
 #include <iostream>
 
@@ -27,6 +29,12 @@ void GameObject::addComponent(Component* c)
 
 void GameObject::draw(sf::RenderWindow& window)
 {
+    Transform* transform = getComponent<Transform>();
+    if(transform)
+    {
+        transform->draw();
+    }
+
     AnimationComponent* animComp = getComponent<AnimationComponent>();
     if(animComp)
     {
@@ -78,6 +86,12 @@ void GameObject::handleEvents()
         {
             teditor->selectWord();
         }
+    }
+
+    PlayerController* pc = getComponent<PlayerController>();
+    if(pc)
+    {
+        pc->fixedUpdate();
     }
 }
 

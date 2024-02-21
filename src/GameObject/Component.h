@@ -11,4 +11,5 @@ class Component
         virtual ~Component();
         virtual void setParent(GameObject* p);
         GameObject* getParent();
+        virtual void draw() {}
 };

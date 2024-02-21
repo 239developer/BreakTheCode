@@ -1,0 +1,10 @@
+PLAYER MOVEMENT TEST
+->
+s button-1.png 50 50
+b c main.scene
+t Ubuntu/Ubuntu-Regular.ttf 100 50 80 0 0 0
+go back
+=
+s susansmol.png 800 500
+p
+=

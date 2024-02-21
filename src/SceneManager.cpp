@@ -11,8 +11,12 @@ const char LOAD_TEXT = 't';
 const char LOAD_BUTTON = 'b';
 const char LOAD_ANIMATION = 'a';
 const char LOAD_TEDITOR = 'n'; //n for notepad lol
+const char LOAD_PLAYER = 'p';
 
 std::shared_ptr<Scene> SceneManager::currentScene;
+bool SceneManager::queuedNew = false; 
+sf::RenderWindow SceneManager::window;
+std::string SceneManager::sceneFileName;
 
 void SceneManager::queueLoading(std::string filename)
 {
@@ -25,7 +29,7 @@ void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
     currentScene = sceneToLoad;
 }
 
-void SceneManager::drawScene(sf::RenderWindow& window)
+void SceneManager::drawScene()
 {
     window.setTitle(currentScene->name());
     for(GameObject* obj : currentScene->objects)
@@ -40,19 +44,13 @@ void SceneManager::handleEvents()
     {
         obj->handleEvents();
     }
+    
     if(queuedNew)
     {
         queuedNew = false;
         std::shared_ptr<Scene> newScene = createSceneFromFile(sceneFileName);
         loadScene(newScene);
     }
-}
-
-SceneManager::SceneManager()
-{
-    queuedNew = false;
-    sceneFileName = "settings.scene";
-    loader.setManager(this);
 }
 
 std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
@@ -93,18 +91,18 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                             nextObj = new GameObject();
                             break;
                         case LOAD_SPRITE:
-                            loader.loadSprite(nextObj, nextLine);
+                            ObjectLoader::loadSprite(nextObj, nextLine);
                             break;
                         case LOAD_TEXT:
                             std::getline(sceneFile, textStr);
-                            loader.loadText(nextObj, nextLine, textStr);
+                            ObjectLoader::loadText(nextObj, nextLine, textStr);
                             break;
                         case LOAD_TEDITOR:
                             std::getline(sceneFile, textStr);
-                            loader.loadTextEditor(nextObj, nextLine, textStr);
+                            ObjectLoader::loadTextEditor(nextObj, nextLine, textStr);
                             break;
                         case LOAD_BUTTON:
-                            loader.loadButton(nextObj, nextLine);
+                            ObjectLoader::loadButton(nextObj, nextLine);
                             break;
                         case LOAD_ANIMATION:
                             textStr = nextLine.substr(0, nextLine.find_first_of(" "));
@@ -115,8 +113,11 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                                 lines.push_back(textStr);
                             }
                             nextLine = nextLine.substr(nextLine.find_first_of(" ") + 1);
-                            loader.loadAnimation(nextObj, nextLine, lines);
+                            ObjectLoader::loadAnimation(nextObj, nextLine, lines);
                             lines.clear();
+                            break;
+                        case LOAD_PLAYER:
+                            ObjectLoader::loadPlayer(nextObj);
                             break;
                     }
                     break;

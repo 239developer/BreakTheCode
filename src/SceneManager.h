@@ -8,16 +8,18 @@ class SceneManager
 {
     private:
         static std::shared_ptr<Scene> currentScene;
-        ObjectLoader loader;
-        std::string sceneFileName;
-        bool queuedNew;
+        static ObjectLoader loader;
+        static std::string sceneFileName;
+        static bool queuedNew;
     public:
-        SceneManager();
-        // NB we're working with just 1 active scene
-        void queueLoading(std::string);
-        void loadScene(std::shared_ptr<Scene> sceneToLoad);
-        void drawScene(sf::RenderWindow& window);
-        void handleEvents();
+        static sf::RenderWindow window;
 
-        std::shared_ptr<Scene> createSceneFromFile(std::string filePath);
+        SceneManager() = delete;
+        // NB we're working with just 1 active scene
+        static void exitGame();
+        static void queueLoading(std::string);
+        static void loadScene(std::shared_ptr<Scene> sceneToLoad);
+        static void drawScene();
+        static void handleEvents();
+        static std::shared_ptr<Scene> createSceneFromFile(std::string filePath);
 };

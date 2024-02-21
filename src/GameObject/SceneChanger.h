@@ -7,10 +7,8 @@ class SceneChanger : public Button
 {
     private:
         std::string sceneFileName;
-        SceneManager* manager;
     public:
         using Button::Button;
         void setScene(std::string);
         void press() override;
-        void setManager(SceneManager*);
 };

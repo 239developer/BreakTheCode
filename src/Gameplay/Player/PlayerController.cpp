@@ -5,45 +5,60 @@
 #include <cmath>
 #include <iostream>
 
-float speed = 500.0f; //pixels per second
-
 void PlayerController::setParent(GameObject* p)
 {
     Component::setParent(p);
     if(!transform)
     {
-        transform = new Transform();
+        transform = p->getComponent<Transform>();
+        if(!transform)
+        {    
+            transform = new Transform();
+        }
         parent->addComponent(transform);
     }
+    // gridPosition = transform->position;
 }
 
 void PlayerController::fixedUpdate()
 {
     // move up/down/left/right
-    sf::Vector2f dir = *(new sf::Vector2f(0.0, 0.0));
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+    if(Input::getKeyDown(sf::Keyboard::Key::W))
     {
-        dir.y -= 1;
+        cell->y -= 1;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+    else if(Input::getKeyDown(sf::Keyboard::Key::S))
     {
-        dir.y += 1;
+        cell->y += 1;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+    else if(Input::getKeyDown(sf::Keyboard::Key::A))
     {
-        dir.x -= 1;
+        cell->x -= 1;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+    else if(Input::getKeyDown(sf::Keyboard::Key::D))
     {
-        dir.x += 1;
+        cell->x += 1;
     }
-    float r = sqrt(dir.x * dir.x + dir.y * dir.y);
-    if(r == 0) r = 1;
-    dir = dir * speed / r;
-    transform->translate(dir * Time::fixedDeltaTime());
 
-    if(Input::getKeyDown(sf::Keyboard::P))
+    //check if out of bounds
+    if(cell->x < 0)
     {
-        std::cout << "Pressed P\n";
+        cell->x = 0;
     }
+    if(cell->y < 0)
+    {
+        cell->y = 0;
+    }
+    if(cell->x > gridSize->x - 1)
+    {
+        cell->x = gridSize->x - 1;
+    }
+    if(cell->y > gridSize->y - 1)
+    {
+        cell->y = gridSize->y - 1;
+    }
+
+    //apply position
+    sf::Vector2f delta(cellSize->x * cell->x, cellSize->y * cell->y);
+    transform->position = *gridPosition + delta;
 }

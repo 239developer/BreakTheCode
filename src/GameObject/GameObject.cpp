@@ -1,25 +1,10 @@
 #include "GameObject.h"
-#include "TextComponent.h"
-#include "AnimationComponent.h"
-#include "SceneChanger.h"
 #include "TextEditor.h"
+#include "Button.h"
 #include "../Gameplay/Engine/Transform.h"
 #include "../Gameplay/Player/PlayerController.h"
 
 #include <iostream>
-
-template <typename T>
-inline T* GameObject::getComponent()
-{
-    T* result = nullptr;
-    for(Component* c : components)
-    {
-        result = dynamic_cast<T*>(c);
-        if(result)
-            break;
-    }
-    return result;
-}
 
 void GameObject::addComponent(Component* c)
 {
@@ -27,46 +12,11 @@ void GameObject::addComponent(Component* c)
     components.push_back(c);
 }
 
-void GameObject::draw(sf::RenderWindow& window)
+void GameObject::draw()
 {
-    Transform* transform = getComponent<Transform>();
-    if(transform)
+    for(Component* c : components)
     {
-        transform->draw();
-    }
-
-    AnimationComponent* animComp = getComponent<AnimationComponent>();
-    if(animComp)
-    {
-        animComp->update();
-        window.draw(*animComp->getSprite());
-    }
-    else
-    {
-        SpriteComponent* spriteComp = getComponent<SpriteComponent>();
-        if(spriteComp)
-        {
-            window.draw(*spriteComp->getSprite());
-        }
-    }
-
-    TextEditor* editor = getComponent<TextEditor>();
-    if(editor)
-    {
-        sf::RectangleShape* selRect = editor->getSelectionRect();
-        if(selRect)
-            window.draw(*selRect);
-        // else
-        //     std::cout << "no rect\n";
-        window.draw(*editor->getText());
-    }
-    else
-    {
-        TextComponent* textComp = getComponent<TextComponent>();
-        if(textComp)
-        {
-            window.draw(*textComp->getText());
-        }
+        c->draw();
     }
 }
 

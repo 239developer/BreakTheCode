@@ -13,6 +13,7 @@ class Time
         static float lastFrame;
     public:
         static float timeSpeed; // time speed multiplier
+        static float time();
         static float fixedDeltaTime();
         static float deltaTime();
         static bool nextTick();

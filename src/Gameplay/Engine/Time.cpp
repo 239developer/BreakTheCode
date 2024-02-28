@@ -10,6 +10,11 @@ float Time::timeSpeed = 1.0; // time speed multiplier
 
 sf::Clock Time::clock;
 
+float Time::time()
+{
+    return clock.getElapsedTime().asSeconds();
+}
+
 float Time::fixedDeltaTime()
 {
     return _fixedDeltaTime;
@@ -26,8 +31,8 @@ bool Time::nextTick()
     bool x = t - lastTick >= _tick;
     if(x)
     {
-        lastTick = t;
         _fixedDeltaTime = 0.9 * _fixedDeltaTime + 0.1 * (t - lastTick);
+        lastTick = t;
     }
     return x;
 }
@@ -38,8 +43,8 @@ bool Time::nextFrame()
     bool x = t - lastFrame >= _frame;
     if(x)
     {
-        lastFrame = t;
         _deltaTime = 0.9 * _deltaTime + 0.1 * (t - lastFrame);
+        lastFrame = t;
     }
     return x;
 }

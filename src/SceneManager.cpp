@@ -2,10 +2,12 @@
 #include <fstream>
 #include "GameObject/GameObject.h"
 #include "SceneManager.h"
+#include "Gameplay/Viewport/Camera.h"
 
 const int NAME_SECTION = 0;
 const int OBJECTS_SECTION = 1;
 const char END_OBJECT = '=';
+const char LOAD_TRANSFORM = '@';
 const char LOAD_SPRITE = 's';
 const char LOAD_TEXT = 't';
 const char LOAD_BUTTON = 'b';
@@ -15,7 +17,6 @@ const char LOAD_PLAYER = 'p';
 
 std::shared_ptr<Scene> SceneManager::currentScene;
 bool SceneManager::queuedNew = false; 
-sf::RenderWindow SceneManager::window;
 std::string SceneManager::sceneFileName;
 
 void SceneManager::queueLoading(std::string filename)
@@ -31,10 +32,10 @@ void SceneManager::loadScene(std::shared_ptr<Scene> sceneToLoad)
 
 void SceneManager::drawScene()
 {
-    window.setTitle(currentScene->name());
+    Camera::window.setTitle(currentScene->name());
     for(GameObject* obj : currentScene->objects)
     {
-        obj->draw(window);
+        obj->draw();
     }
 }
 
@@ -89,6 +90,9 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                         case END_OBJECT:
                             scene->objects.push_back(nextObj);
                             nextObj = new GameObject();
+                            break;
+                        case LOAD_TRANSFORM:
+                            ObjectLoader::loadTransform(nextObj, nextLine);
                             break;
                         case LOAD_SPRITE:
                             ObjectLoader::loadSprite(nextObj, nextLine);

@@ -12,8 +12,6 @@ class SceneManager
         static std::string sceneFileName;
         static bool queuedNew;
     public:
-        static sf::RenderWindow window;
-
         SceneManager() = delete;
         // NB we're working with just 1 active scene
         static void exitGame();

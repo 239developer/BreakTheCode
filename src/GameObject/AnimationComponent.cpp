@@ -51,3 +51,9 @@ void AnimationComponent::setLoop(bool b = true)
 {
     loop = b;
 }
+
+void AnimationComponent::draw()
+{
+    update();
+    SpriteComponent::draw();
+}

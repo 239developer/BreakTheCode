@@ -1,4 +1,6 @@
 #include "TextEditor.h"
+#include "../Gameplay/Viewport/Camera.h"
+#include "../Gameplay/Engine/Transform.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -104,7 +106,8 @@ void TextEditor::selectWord()
                 sf::RectangleShape* rect = new sf::RectangleShape(size);
                 int x = text->getPosition().x;
                 int y = text->getPosition().y;
-                rect->setPosition(x + start * charWidth, y + line * lineHeight);
+                rectPosition.x = x + start * charWidth;
+                rectPosition.y = y + line * lineHeight;
                 sf::Color col(50, 80, 150);
                 rect->setFillColor(col);
 
@@ -118,4 +121,23 @@ void TextEditor::selectWord()
 sf::RectangleShape* TextEditor::getSelectionRect()
 {
     return selectionRect;
+}
+
+void TextEditor::draw()
+{
+    Transform* transform = parent->getComponent<Transform>();
+    if(transform)
+    {    
+        text->setPosition(transform->position - Camera::position);
+        if(selectionRect)
+        {
+            selectionRect->setPosition(rectPosition - Camera::position);
+        }
+    }
+
+    TextComponent::draw();
+    if(selectionRect)
+    {
+        Camera::window.draw(*selectionRect);
+    }
 }

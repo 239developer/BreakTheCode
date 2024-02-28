@@ -1,6 +1,7 @@
 #include "PlayerController.h"
 #include "../Viewport/Camera.h"
 #include "../Engine/Time.h"
+#include "../Engine/Input.h"
 #include <cmath>
 #include <iostream>
 
@@ -39,8 +40,10 @@ void PlayerController::fixedUpdate()
     float r = sqrt(dir.x * dir.x + dir.y * dir.y);
     if(r == 0) r = 1;
     dir = dir * speed / r;
-    transform->translate(dir * 0.02f);
-    // std::cout << r << " " << dir.x * Time::fixedDeltaTime() << " " << dir.y * Time::fixedDeltaTime() << "\n";
+    transform->translate(dir * Time::fixedDeltaTime());
 
-    // Camera::translate(dir * Time::fixedDeltaTime());
+    if(Input::getKeyDown(sf::Keyboard::P))
+    {
+        std::cout << "Pressed P\n";
+    }
 }

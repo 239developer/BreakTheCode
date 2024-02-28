@@ -20,4 +20,5 @@ class AnimationComponent : public SpriteComponent
         void update(); 
         void setLoop(bool);
         void setID(int);
+        virtual void draw() override;
 };

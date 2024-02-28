@@ -13,8 +13,19 @@ class GameObject
 
         GameObject();
         void addComponent(Component * c);
-        void draw(sf::RenderWindow& window);
+        void draw();
         void handleEvents();
+
         template <typename T>
-        T* getComponent();
+        inline T* getComponent()
+        {
+            T* result = nullptr;
+            for(Component* c : components)
+            {
+                result = dynamic_cast<T*>(c);
+                if(result)
+                    break;
+            }
+            return result;
+        }
 };

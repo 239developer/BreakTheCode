@@ -12,4 +12,5 @@ class SpriteComponent : public Component
         void setSprite(sf::Sprite*, sf::Texture*);
         sf::Sprite* getSprite();
         sf::Texture* getTexture();
+        virtual void draw() override;
 };

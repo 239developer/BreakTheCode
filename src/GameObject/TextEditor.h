@@ -10,6 +10,7 @@ class TextEditor : public TextComponent  //depends on the font being monospaced
         int charWidth;
         int lineHeight;
         sf::RectangleShape* selectionRect;
+        sf::Vector2f rectPosition;
     public:
         using TextComponent::TextComponent;
         void setText(sf::Text*, sf::Font*) override;
@@ -17,4 +18,5 @@ class TextEditor : public TextComponent  //depends on the font being monospaced
         void formatText();
         void selectWord();
         sf::RectangleShape* getSelectionRect();
+        virtual void draw() override;
 };

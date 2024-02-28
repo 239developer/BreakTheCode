@@ -11,4 +11,5 @@ class TextComponent : public Component
         using Component::Component;
         virtual void setText(sf::Text*, sf::Font*);
         sf::Text* getText();
+        virtual void draw() override;
 };

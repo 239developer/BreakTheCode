@@ -14,7 +14,7 @@ class GameObject
         GameObject();
         void addComponent(Component * c);
         void draw();
-        void handleEvents();
+        void update();
 
         template <typename T>
         inline T* getComponent()

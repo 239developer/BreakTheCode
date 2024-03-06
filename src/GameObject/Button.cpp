@@ -24,3 +24,11 @@ void Button::setParent(GameObject* p)
     Component::setParent(p);
     bounds = p->getComponent<SpriteComponent>()->getSprite()->getGlobalBounds();
 }
+
+void Button::update()
+{
+    if(this->isPressed())
+    {
+        this->press();
+    }
+}

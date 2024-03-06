@@ -5,6 +5,8 @@
 #include <cmath>
 #include <iostream>
 
+//          !!! DEPRECATED !!!
+
 void PlayerController::setParent(GameObject* p)
 {
     Component::setParent(p);
@@ -19,6 +21,8 @@ void PlayerController::setParent(GameObject* p)
     }
     // gridPosition = transform->position;
 }
+
+//          !!! DEPRECATED !!!
 
 void PlayerController::fixedUpdate()
 {
@@ -62,3 +66,12 @@ void PlayerController::fixedUpdate()
     sf::Vector2f delta(cellSize->x * cell->x, cellSize->y * cell->y);
     transform->position = *gridPosition + delta;
 }
+
+//          !!! DEPRECATED !!!
+
+void PlayerController::update()
+{
+    fixedUpdate();
+}
+
+//          !!! DEPRECATED !!!

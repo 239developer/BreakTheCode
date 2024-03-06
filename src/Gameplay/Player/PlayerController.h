@@ -2,7 +2,9 @@
 #include "../../GameObject/GameObject.h"
 #include "../Engine/Transform.h"
 
-class PlayerController : public Component
+//          !!! DEPRECATED !!!
+
+class PlayerController : public Component 
 {
     private:
         Transform* transform;
@@ -14,4 +16,7 @@ class PlayerController : public Component
         using Component::Component;
         virtual void setParent(GameObject*) override;
         void fixedUpdate();
+        virtual void update() override;
 };
+
+//          !!! DEPRECATED !!!

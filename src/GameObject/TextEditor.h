@@ -19,4 +19,5 @@ class TextEditor : public TextComponent  //depends on the font being monospaced
         void selectWord();
         sf::RectangleShape* getSelectionRect();
         virtual void draw() override;
+        virtual void update() override;
 };

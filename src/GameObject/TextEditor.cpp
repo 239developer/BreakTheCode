@@ -141,3 +141,11 @@ void TextEditor::draw()
         Camera::window.draw(*selectionRect);
     }
 }
+
+void TextEditor::update()
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        selectWord();
+    }
+}

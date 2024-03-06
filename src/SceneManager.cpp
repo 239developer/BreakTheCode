@@ -43,7 +43,7 @@ void SceneManager::handleEvents()
 {
     for(GameObject* obj : currentScene->objects)
     {
-        obj->handleEvents();
+        obj->update();
     }
     
     if(queuedNew)

@@ -13,4 +13,5 @@ class Component
         virtual void setParent(GameObject* p);
         GameObject* getParent();
         virtual void draw() {}
+        virtual void update() {}
 };

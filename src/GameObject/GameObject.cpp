@@ -20,28 +20,11 @@ void GameObject::draw()
     }
 }
 
-void GameObject::handleEvents()
+void GameObject::update()
 {
-    Button* button = getComponent<Button>();
-    if(button)
+    for(Component* c : components)
     {
-        if(button->isPressed())
-            button->press();
-    }
-
-    TextEditor* teditor = getComponent<TextEditor>();
-    if(teditor)
-    {
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        {
-            teditor->selectWord();
-        }
-    }
-
-    PlayerController* pc = getComponent<PlayerController>();
-    if(pc)
-    {
-        pc->fixedUpdate();
+        c->update();
     }
 }
 

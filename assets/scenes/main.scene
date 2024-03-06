@@ -5,7 +5,7 @@ t Ubuntu/Ubuntu-Bold.ttf 400 200 200 255 255 255
 THE GAME
 =
 s button-1.png 700 500 1 1
-b c Levels/level0.scene
+b c Levels/level1.scene
 t Ubuntu/Ubuntu-Regular.ttf 860 512 80 100 10 0
 PLAY
 =

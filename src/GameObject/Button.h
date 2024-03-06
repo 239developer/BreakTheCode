@@ -11,4 +11,5 @@ class Button : public Component
         bool isPressed();
         virtual void press();
         void setParent(GameObject* p) override;
+        virtual void update() override;
 };

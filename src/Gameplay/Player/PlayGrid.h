@@ -6,7 +6,7 @@
 class PlayGrid : public Component
 {
     private:
-        int cellSize = 96;
+        int cellSize = 150;
         int width = 1;
         int height = 1;
         std::vector<int> networks;

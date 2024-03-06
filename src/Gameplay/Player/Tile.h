@@ -26,5 +26,5 @@ class Tile //stores info about a tile for PlayGrid
         int dy = 0;
         int rotation = 0;
         sf::Sprite sprite;
-        Tile() {}
+        Tile() { sprite = *(new sf::Sprite()); }
 };

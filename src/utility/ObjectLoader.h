@@ -19,4 +19,5 @@ class ObjectLoader
         static void loadAnimation(GameObject*, std::string, std::vector<std::string>);
         static void loadButton(GameObject* parent, std::string line);
         static void loadPlayer(GameObject* parent);
+        static void loadPlayGrid(GameObject* parent, std::vector<std::string>);
 };

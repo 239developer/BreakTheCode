@@ -2,6 +2,7 @@
 #include "../Engine/Input.h"
 #include "../Engine/Transform.h"
 #include "../Viewport/Camera.h"
+#include <iostream>
 
 void PlayGrid::addTexture(sf::Texture texture)
 {
@@ -20,6 +21,11 @@ void PlayGrid::setSize(int sizeX, int sizeY)
             tile->x = x;
             tile->y = y;
             tile->sprite.setTexture(textures[0]);
+            sf::IntRect rect = tile->sprite.getTextureRect();
+            tile->sprite.setOrigin(rect.width / 2.0f, rect.height / 2.0f);
+            float scale = 1.0 * cellSize / tile->sprite.getTextureRect().width;
+            tile->sprite.setScale(scale, scale);
+            floor.push_back(tile);
         }
     }
 }
@@ -28,10 +34,14 @@ void PlayGrid::addTile(int x, int y, int rotation, int type, int network)
 {   
     Tile* tile = new Tile();
     tile->sprite.setTexture(textures[type]);
-    float scale = cellSize / tile->sprite.getTextureRect().width;
+    sf::IntRect rect = tile->sprite.getTextureRect();
+    tile->sprite.setOrigin(rect.width / 2.0f, rect.height / 2.0f);
+    float scale = 1.0 * cellSize / rect.width;
     tile->sprite.setScale(scale, scale);
     tile->sprite.setRotation(90.0f * rotation);
     tile->rotation = rotation;
+    tile->x = x;
+    tile->y = y;
     
     if(network <= networks.size())
     {
@@ -67,6 +77,8 @@ void PlayGrid::addTile(int x, int y, int rotation, int type, int network)
         default:
             tile->type = -1;
     }
+
+    std::cout << "Added a tile to the grid: " << x << " " << y << " " << rotation << " " << type << "\n";
 }
 
 void PlayGrid::gameStep()
@@ -116,6 +128,10 @@ void PlayGrid::gameStep()
                 if(player->x == tile->x && player->y == tile->y)
                 {
                     networks[tile->network] = 1;
+                }
+                else
+                {
+                    networks[tile->network] = 0;
                 }
                 break;
         }
@@ -187,7 +203,7 @@ void PlayGrid::draw()
     }
 
     //floor
-    for(int i = 0; i < floor.size(), i++)
+    for(int i = 0; i < floor.size(); i++)
     {
         sf::Vector2f pos((floor[i]->x + floor[i]->dx) * cellSize, (floor[i]->y + floor[i]->dy) * cellSize);
         floor[i]->sprite.setPosition(position + pos);
@@ -195,7 +211,7 @@ void PlayGrid::draw()
     }
 
     //walls
-    for(int i = 0; i < walls.size(), i++)
+    for(int i = 0; i < walls.size(); i++)
     {
         sf::Vector2f pos((walls[i]->x + walls[i]->dx) * cellSize, (walls[i]->y + walls[i]->dy) * cellSize);
         walls[i]->sprite.setPosition(position + pos);
@@ -203,7 +219,9 @@ void PlayGrid::draw()
         {
             Tile* rod = new Tile();
             rod->sprite.setTexture(textures[Tile::PistonRod]);
-            float scale = cellSize / rod->sprite.getTextureRect().width;
+            sf::IntRect rect = rod->sprite.getTextureRect();
+            rod->sprite.setOrigin(rect.width / 2.0f, rect.height / 2.0f);
+            float scale = 1.0 * cellSize / rod->sprite.getTextureRect().width;
             rod->sprite.setScale(scale, scale);
             rod->sprite.setRotation(90.0f * walls[i]->rotation);
             rod->rotation = walls[i]->rotation;
@@ -214,7 +232,7 @@ void PlayGrid::draw()
     }
 
     //buttons
-    for(int i = 0; i < buttons.size(), i++)
+    for(int i = 0; i < buttons.size(); i++)
     {
         sf::Vector2f pos((buttons[i]->x + buttons[i]->dx) * cellSize, (buttons[i]->y + buttons[i]->dy) * cellSize);
         buttons[i]->sprite.setPosition(position + pos);
@@ -222,7 +240,7 @@ void PlayGrid::draw()
     }
 
     //pistons
-    for(int i = 0; i < pistons.size(), i++)
+    for(int i = 0; i < pistons.size(); i++)
     {
         sf::Vector2f pos((pistons[i]->x + pistons[i]->dx) * cellSize, (pistons[i]->y + pistons[i]->dy) * cellSize);
         pistons[i]->sprite.setPosition(position + pos);
@@ -230,14 +248,20 @@ void PlayGrid::draw()
         {
             Tile* rod = new Tile();
             rod->sprite.setTexture(textures[Tile::PistonRod]);
-            float scale = cellSize / rod->sprite.getTextureRect().width;
+            sf::IntRect rect = rod->sprite.getTextureRect();
+            rod->sprite.setOrigin(rect.width / 2.0f, rect.height / 2.0f);
+            float scale = 1.0 * cellSize / rod->sprite.getTextureRect().width;
             rod->sprite.setScale(scale, scale);
-            rod->sprite.setRotation(90.0f * walls[i]->rotation);
-            rod->rotation = walls[i]->rotation;
+            rod->sprite.setRotation(90.0f * pistons[i]->rotation);
+            rod->rotation = pistons[i]->rotation;
             rod->sprite.setPosition(position + pos);
             Camera::window.draw(rod->sprite);
         }
         Camera::window.draw(pistons[i]->sprite);
     }
 
+    //player
+    sf::Vector2f pos((player->x + player->dx) * cellSize, (player->y + player->dy) * cellSize);
+    player->sprite.setPosition(position + pos);
+    Camera::window.draw(player->sprite);
 }

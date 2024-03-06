@@ -14,6 +14,7 @@ const char LOAD_BUTTON = 'b';
 const char LOAD_ANIMATION = 'a';
 const char LOAD_TEDITOR = 'n'; //n for notepad lol
 const char LOAD_PLAYER = 'p';
+const char LOAD_PLAYGRID = 'g';
 
 std::shared_ptr<Scene> SceneManager::currentScene;
 bool SceneManager::queuedNew = false; 
@@ -122,6 +123,19 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                             break;
                         case LOAD_PLAYER:
                             ObjectLoader::loadPlayer(nextObj);
+                            break;
+                        case LOAD_PLAYGRID:
+                            textStr = nextLine.substr(0, nextLine.find_first_of(" "));
+                            x = std::stof(textStr);
+                            nextLine = nextLine.substr(nextLine.find_first_of(" ") + 1);
+                            lines.push_back(nextLine);
+                            for(int i = 0; i < 7 + x; i++)
+                            {
+                                std::getline(sceneFile, textStr);
+                                lines.push_back(textStr);
+                            }
+                            ObjectLoader::loadPlayGrid(nextObj, lines);
+                            lines.clear();
                             break;
                     }
                     break;

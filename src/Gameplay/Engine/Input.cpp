@@ -4,6 +4,7 @@
 #include <iostream>
 
 int Input::pressed[sf::Keyboard::Key::KeyCount];
+bool Input::anythingDown = false;
 
 void Input::resetKeys()
 {
@@ -14,6 +15,7 @@ void Input::resetKeys()
             pressed[i]++;
         }
     }
+    anythingDown = false;
 }
 
 void Input::resetKey(int key)
@@ -29,6 +31,7 @@ void Input::setKey(int key)
     if(key >= 0 && key < sf::Keyboard::Key::KeyCount && pressed[key] == 0)
     {
         pressed[key] = 1;
+        anythingDown = true;
     }
 }
 
@@ -43,4 +46,9 @@ bool Input::getKeyDown(int key)
         }
     }
     return false;
+}
+
+bool Input::getAnyKeyDown()
+{
+    return anythingDown;
 }

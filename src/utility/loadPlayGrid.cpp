@@ -7,7 +7,7 @@ void ObjectLoader::loadPlayGrid(GameObject* parent, std::vector<std::string> lin
     PlayGrid* component = new PlayGrid();
     try
     {
-        for(int i = 1; i < 7 + 1; i++)
+        for(int i = 1; i < 8 + 1; i++)
         {
             sf::Texture* texture = new sf::Texture();
             texture->loadFromFile("../assets/textures/tiles/" + lines[i]);
@@ -17,7 +17,7 @@ void ObjectLoader::loadPlayGrid(GameObject* parent, std::vector<std::string> lin
         std::vector<float> v = extractCoordinates(lines[0], 0, 1);
         component->setSize((int)v[0], (int)v[1]);
 
-        for(int i = 7 + 1; i < lines.size(); i++)
+        for(int i = 8 + 1; i < lines.size(); i++)
         {
             std::vector<float> v = extractCoordinates(lines[i], 0, 4);
             component->addTile(v[0], v[1], v[2], v[3], v[4]);

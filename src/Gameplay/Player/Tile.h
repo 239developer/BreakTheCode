@@ -14,11 +14,14 @@ class Tile //stores info about a tile for PlayGrid
             Button,
             PistonHead,
             PistonBase,
-            PistonRod
+            PistonRod,
+            Crate
         };
 
         int type = -1;
         int network = -1;
+        int minExtension = 0;
+        int maxExtension = 1;
         bool output = false;
         int x = 0;
         int y = 0;

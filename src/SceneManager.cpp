@@ -129,7 +129,7 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                             x = std::stof(textStr);
                             nextLine = nextLine.substr(nextLine.find_first_of(" ") + 1);
                             lines.push_back(nextLine);
-                            for(int i = 0; i < 7 + x; i++)
+                            for(int i = 0; i < 8 + x; i++)
                             {
                                 std::getline(sceneFile, textStr);
                                 lines.push_back(textStr);

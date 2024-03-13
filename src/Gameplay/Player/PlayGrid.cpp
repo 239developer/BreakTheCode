@@ -74,11 +74,35 @@ void PlayGrid::addTile(int x, int y, int rotation, int type, int network)
             walls.push_back(tile);
             pistons.push_back(tile);
             break;
+        case Tile::Crate:
+            crates.push_back(tile);
+            break;
         default:
             tile->type = -1;
     }
 
     std::cout << "Added a tile to the grid: " << x << " " << y << " " << rotation << " " << type << "\n";
+}
+
+void PlayGrid::pushThing(Tile* thing, int dx, int dy)
+{
+    //check if there's something behind the thing
+    bool allow = thing->y + dy >= 0 && thing->y + dy < height && thing->x + dx >= 0 && thing->x + dx < width;
+    for(Tile* wall : walls)
+    {
+        allow = allow && !(thing->x + dx == wall->x + wall->dx && thing->y + dy == wall->y + wall->dy);
+    }
+    for(Tile* crate : crates)
+    {
+        allow = allow && !(thing->x + dx == crate->x && thing->y  + dy== crate->y);
+    }
+
+    //if yes, apply movement to it
+    if(allow)
+    {
+        thing->x += dx;
+        thing->y += dy;
+    }
 }
 
 void PlayGrid::gameStep()
@@ -102,21 +126,14 @@ void PlayGrid::gameStep()
     {
         dx = 1;
     }
-
-    bool allow = false; //can player go there?
-    if(player->y + dy >= 0 && player->y + dy < height && player->x + dx >= 0 && player->x + dx < width)
+    for(Tile* crate : crates)
     {
-        allow = true;
-        for(Tile* tile : walls)
+        if(crate->x == player->x + dx && crate->y == player->y + dy) //if there's a crate where we wanna move
         {
-            allow &= !(tile->x + tile->dx == player->x + dx && tile->y + tile->dy == player->y + dy);
-        }
-        if(allow)
-        {
-            player->x += dx;
-            player->y += dy;
+            pushThing(crate, dx, dy);
         }
     }
+    pushThing(player, dx, dy);
 
     // check every button
     for(int i = 0; i < buttons.size(); i++)
@@ -170,7 +187,30 @@ void PlayGrid::gameStep()
                             tile->dy = -1;
                             break;
                     }
-                    if(player->x == tile->x + tile->dx && player->y == tile->y + tile->dy)
+                    if(player->x == tile->x + tile->dx && player->y == tile->y + tile->dy) //if there's a player where we wanna move
+                    {
+                        pushThing(player, tile->dx, tile->dy);
+                    }
+                    for(Tile* crate : crates)
+                    {
+                        if(crate->x == tile->x + tile->dx && crate->y == tile->y + tile->dy) //if there's a crate where we wanna move
+                        {
+                            pushThing(crate, tile->dx, tile->dy);
+                        }
+                    }
+                    bool canMove = true;
+                    if(player->x == tile->x + tile->dx && player->y == tile->y + tile->dy) //if there's a player where we wanna move
+                    {
+                        canMove = false;
+                    }
+                    for(Tile* crate : crates)
+                    {
+                        if(crate->x == tile->x + tile->dx && crate->y == tile->y + tile->dy) //if there's a crate where we wanna move
+                        {
+                            canMove = false;
+                        }
+                    }
+                    if(!canMove)
                     {
                         tile->dx = 0;
                         tile->dy = 0;
@@ -260,8 +300,16 @@ void PlayGrid::draw()
         Camera::window.draw(pistons[i]->sprite);
     }
 
+    //crates
+    for(int i = 0; i < crates.size(); i++)
+    {
+        sf::Vector2f pos((crates[i]->x) * cellSize, (crates[i]->y) * cellSize);
+        crates[i]->sprite.setPosition(position + pos);
+        Camera::window.draw(crates[i]->sprite);
+    }
+
     //player
-    sf::Vector2f pos((player->x + player->dx) * cellSize, (player->y + player->dy) * cellSize);
+    sf::Vector2f pos((player->x) * cellSize, (player->y) * cellSize);
     player->sprite.setPosition(position + pos);
     Camera::window.draw(player->sprite);
 }

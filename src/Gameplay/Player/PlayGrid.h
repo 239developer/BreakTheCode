@@ -15,7 +15,10 @@ class PlayGrid : public Component
         std::vector<Tile*> walls; // all player can be blocked by, e g piston bases
         std::vector<Tile*> buttons; // all that can activate
         std::vector<Tile*> pistons; // all that can be activated
+        std::vector<Tile*> crates;
         Tile* player;
+
+        void pushThing(Tile*, int, int);
     public:
         using Component::Component;
         void addTexture(sf::Texture);

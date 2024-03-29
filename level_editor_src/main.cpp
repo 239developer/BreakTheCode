@@ -1,8 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
-
-const int cell = 128;
+#include "Clicker.h"
 
 int main()
 {
@@ -18,7 +17,11 @@ int main()
     float step = 0.2f;
     float lastStep = 0.0f;
     bool LMB_pressed = false;
+    bool RMB_pressed = false;
     bool R_pressed = false;
+    bool T_pressed = false;
+
+    Clicker click(&window);
 
     while(window.isOpen())
     {
@@ -39,13 +42,21 @@ int main()
                 LMB_pressed = false;
             else if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 LMB_pressed = true;
+            if(RMB_pressed)
+                RMB_pressed = false;
+            else if(sf::Mouse::isButtonPressed(sf::Mouse::Right))
+                RMB_pressed = true;
             if(R_pressed)
                 R_pressed = false;
             else if(sf::Keyboard::isKeyPressed(sf::Keyboard::R))
                 R_pressed = true;
+            if(T_pressed)
+                T_pressed = false;
+            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::T))
+                T_pressed = true;
             /* ye */
             
-
+            
             
         }
     }

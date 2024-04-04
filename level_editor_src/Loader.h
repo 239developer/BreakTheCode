@@ -4,5 +4,6 @@
 
 class Loader
 {
-    static sf::Sprite* loadSprite(std::string);
+    public:
+        static sf::Texture* loadTexture(std::string);
 };

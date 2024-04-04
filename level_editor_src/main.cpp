@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
 #include "Clicker.h"
+#include "Loader.h"
+
+int cell = 128;
 
 int main()
 {
@@ -9,9 +12,10 @@ int main()
     int size_y = 0;
     std::cin >> size_x >> size_y;
 
-    sf::VideoMode videoMode = sf::VideoMode(size_x * cell, size_y * cell);
+    Clicker click;
+    sf::VideoMode videoMode = sf::VideoMode::getDesktopMode();
     sf::RenderWindow window;
-    window.create(videoMode, "editor");
+    window.create(videoMode, "editor", sf::Style::Fullscreen);
 
     sf::Clock clock;
     float step = 0.2f;
@@ -20,20 +24,23 @@ int main()
     bool RMB_pressed = false;
     bool R_pressed = false;
     bool T_pressed = false;
-
-    Clicker click(&window);
+    
+    sf::Sprite bg;
+    sf::Texture* t = Loader::loadTexture("tiles/bg_00");
+    t->setRepeated(true);
+    bg.setTexture(*t);
 
     while(window.isOpen())
     {
         if(clock.getElapsedTime().asSeconds() - lastStep >= step)
         {
-            lastStep = clock.getElapsedTime();
+            lastStep = clock.getElapsedTime().asSeconds();
             sf::Event event;
             while (window.pollEvent(event))
             {
                 if(event.type == sf::Event::Closed)
                 {
-                    Camera::window.close();
+                    window.close();
                 }
             }
             
@@ -56,8 +63,24 @@ int main()
                 T_pressed = true;
             /* ye */
             
+            if(T_pressed)
+                click.add();
+            else if(R_pressed)
+                click.rotate();
+            else if(LMB_pressed)
+                click.set();
+            else if(RMB_pressed)
+                click.change();
             
-            
+            //draw
+            window.clear();
+            window.draw(bg);
+            std::vector<sf::Sprite*> s = click.draw();
+            for(sf::Sprite* sprite : s)
+            {
+                window.draw(*sprite);
+            }
+            window.display();
         }
     }
 

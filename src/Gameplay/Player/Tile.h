@@ -15,7 +15,8 @@ class Tile //stores info about a tile for PlayGrid
             PistonHead,
             PistonBase,
             PistonRod,
-            Crate
+            Crate,
+            Win
         };
 
         int type = -1;

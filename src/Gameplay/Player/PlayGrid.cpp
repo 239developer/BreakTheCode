@@ -2,6 +2,7 @@
 #include "../Engine/Input.h"
 #include "../Engine/Transform.h"
 #include "../Viewport/Camera.h"
+#include "LevelManager.h"
 #include <iostream>
 
 void PlayGrid::addTexture(sf::Texture texture)
@@ -77,6 +78,9 @@ void PlayGrid::addTile(int x, int y, int rotation, int type, int network)
         case Tile::Crate:
             crates.push_back(tile);
             break;
+        case Tile::Win:
+            buttons.push_back(tile);
+            break;
         default:
             tile->type = -1;
     }
@@ -149,6 +153,12 @@ void PlayGrid::gameStep()
                 else
                 {
                     networks[tile->network] = 0;
+                }
+                break;
+            case Tile::Win:
+                if(player->x == tile->x && player->y == tile->y)
+                {
+                    LevelManager::loadNext();
                 }
                 break;
         }

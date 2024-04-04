@@ -3,6 +3,7 @@
 #include "GameObject/GameObject.h"
 #include "SceneManager.h"
 #include "Gameplay/Viewport/Camera.h"
+#include "Gameplay/Player/PlayGrid.h"
 
 const int NAME_SECTION = 0;
 const int OBJECTS_SECTION = 1;
@@ -129,7 +130,7 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                             x = std::stof(textStr);
                             nextLine = nextLine.substr(nextLine.find_first_of(" ") + 1);
                             lines.push_back(nextLine);
-                            for(int i = 0; i < 8 + x; i++)
+                            for(int i = 0; i < PlayGrid::tileTypeAmount + x; i++)
                             {
                                 std::getline(sceneFile, textStr);
                                 lines.push_back(textStr);

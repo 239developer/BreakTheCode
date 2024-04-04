@@ -20,6 +20,7 @@ class PlayGrid : public Component
 
         void pushThing(Tile*, int, int);
     public:
+        static const int tileTypeAmount = 9;
         using Component::Component;
         void addTexture(sf::Texture);
         void setSize(int, int);

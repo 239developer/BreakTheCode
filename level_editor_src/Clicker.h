@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 
 class Tile
 {
@@ -31,17 +32,15 @@ class Tile
 class Clicker
 {
     private:
-        sf::RenderWindow* window;
-        const int cell = 128;
-        sf::Sprite* sprites[8];
         std::vector<Tile*> tiles;
         int curr = -1;
-
+        std::string getName(int);
     public:
-        Clicker(sf::RenderWindow*);
+        const int cell = 128;
+        Clicker();
         void rotate();
-        void change(bool);
+        void change();
         void add();
         void set();
-        void draw();
+        std::vector<sf::Sprite*> draw();
 };

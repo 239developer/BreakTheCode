@@ -1,10 +1,20 @@
-SETTINGS
+TEST
 ->
-t Ubuntu/Ubuntu-Italic.ttf 820 512 80 255 255 255
-nothing here yet
-=
-s button-1.png 50 50 1 1
-b c main.scene
-t Ubuntu/Ubuntu-Regular.ttf 100 50 80 0 0 0
-go back
+@ - 200 100
+g 6 10 7
+floor.png
+player.png
+wall.png
+button.png
+piston_head.png
+piston_base.png
+piston_rod.png
+crate.png
+win.png
+0 0 0 1 -1
+2 4 0 3 0
+3 4 3 5 0
+3 4 3 4 0
+5 3 0 7 -1
+6 3 0 2 -1
 =

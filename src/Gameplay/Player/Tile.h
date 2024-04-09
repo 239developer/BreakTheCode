@@ -1,34 +1,19 @@
 #pragma once
+#include "../../GameObject/Component.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class Tile //stores info about a tile for PlayGrid
+class Tile : public Component
 {
+    protected:
+        int rotation = 0; // (rotation * pi / 2) radians (CCW)
+        sf::Sprite* sprite;
     public:
-        enum TileType
-        {
-            Empty = -1,
-            Floor = 0,
-            Player,
-            Wall,
-            Button,
-            PistonHead,
-            PistonBase,
-            PistonRod,
-            Crate,
-            Win
-        };
-
-        int type = -1;
-        int network = -1;
-        int minExtension = 0;
-        int maxExtension = 1;
-        bool output = false;
         int x = 0;
         int y = 0;
-        int dx = 0;
-        int dy = 0;
-        int rotation = 0;
-        sf::Sprite sprite;
-        Tile() { sprite = *(new sf::Sprite()); }
+        using Component::Component;
+        void rotate(int);
+        void setRotation(int);
+        void setPosition(int, int);
+        virtual void draw() override;
 };

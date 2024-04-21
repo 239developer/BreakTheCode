@@ -1,8 +1,4 @@
 #include "GameObject.h"
-#include "TextEditor.h"
-#include "Button.h"
-#include "../Gameplay/Engine/Transform.h"
-#include "../Gameplay/Player/PlayerController.h"
 
 #include <iostream>
 

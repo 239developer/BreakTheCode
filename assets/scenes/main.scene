@@ -1,8 +1,8 @@
 Main menu
 ->
 s bg-1.png 0 0 1 1
-t Ubuntu/Ubuntu-Bold.ttf 400 200 200 255 255 255
-THE GAME
+t Ubuntu/Ubuntu-Bold.ttf 200 200 180 255 255 255
+BREAK THE CODE
 =
 s button-1.png 700 500 1 1
 b c Levels/level1.scene

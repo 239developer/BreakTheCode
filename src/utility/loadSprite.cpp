@@ -6,15 +6,15 @@ void ObjectLoader::loadSprite(GameObject* parent, std::string line)
 {
     SpriteComponent* component = new SpriteComponent();
     std::string texturePath = line.substr(0, line.find_first_of(" "));
-    sf::Texture* texture = new sf::Texture();
+    sf::Texture* texture = loadTexture(texturePath);
     try
     {
-        texture->loadFromFile("../assets/textures/" + texturePath);
-        std::cout << "Loaded texture: [" << texturePath << "]\n";
+        // texture->loadFromFile("../assets/textures/" + texturePath);
+        // std::cout << "Loaded texture: [" << texturePath << "]\n";
         sf::Sprite* sprite = new sf::Sprite();
         sprite->setTexture(*texture);
 
-        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 3);   // extracts 4 coordinates representing:
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 3);   // extracts 4 coordinates representing:
         const sf::Vector2f pos(v[0], v[1]); //position
         sprite->setPosition(pos);
         sprite->setScale(v[2], v[3]); //and scale

@@ -7,6 +7,38 @@ Piston::Piston(sf::Vector2f displacement, LogicNetwork* n, int min, int max, Til
     maxLength = max;
     head = _head;
     rod = _rod;
+    addTag("piston");
+    addTag("pistonBase");
+    head.addTag("piston");
+    rod.addTag("piston");
+    extend(isActive());
+}
+
+Piston::Piston(LogicNetwork* n, int min, int max, Tile& _head, Tile& _rod)
+    : Wall::Wall(), LogicTile::LogicTile(n)
+{
+    minLength = min;
+    maxLength = max;
+    head = _head;
+    rod = _rod;
+    addTag("piston");
+    addTag("pistonBase");
+    head.addTag("piston");
+    rod.addTag("piston");
+    extend(isActive());
+}
+
+Piston::Piston(int networkID, int min, int max, Tile& _head, Tile& _rod)
+    : Wall::Wall(), LogicTile::LogicTile(networkID)
+{
+    minLength = min;
+    maxLength = max;
+    head = _head;
+    rod = _rod;
+    addTag("piston");
+    addTag("pistonBase");
+    head.addTag("piston");
+    rod.addTag("piston");
     extend(isActive());
 }
 
@@ -46,4 +78,11 @@ void Piston::draw()
     draw();
     head.setRotation(this->rotation);
     head.draw();
+}
+
+void Piston::setDisplacement(sf::Vector2f displace)
+{
+    head.setDisplacement(displace);
+    rod.setDisplacement(displace);
+    displacement = displace;
 }

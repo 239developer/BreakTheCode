@@ -4,9 +4,9 @@
 class LogicNetwork
 {
     protected:
-        std::string name;
+        int id;
     public:
         bool active;
-        LogicNetwork(std::string n) { name = n; }
-        std::string getName() { return name; }
+        LogicNetwork(int n) { id = n; }
+        int getID() { return id; }
 };

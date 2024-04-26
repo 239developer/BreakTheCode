@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "../Viewport/Camera.h"
+#include <iostream>
 
 int Tile::cellSize = 128;
 
@@ -17,16 +18,28 @@ int Tile::sin(int x)
     return (x % 2 == 0 ? 0 : (x % 4 == 1 ? 1 : -1));
 }
 
+void Tile::setTexture(sf::Texture* t)
+{
+    sprite->setTexture(*t);
+    sf::IntRect rect = sprite->getTextureRect();
+    sprite->setOrigin(rect.width * 0.5f, rect.height * 0.5f);
+    float scaleX = (float)cellSize / rect.width;
+    float scaleY = (float)cellSize / rect.height;
+    sprite->setScale(scaleX, scaleY);
+    sprite->setRotation(90.0f * rotation);
+    update();
+}
+
 void Tile::setSprite(sf::Sprite* s)
 {
     sprite = s;
     sf::IntRect rect = sprite->getTextureRect();
     sprite->setOrigin(rect.width * 0.5f, rect.height * 0.5f);
-    float scaleX = cellSize / rect.width;
-    float scaleY = cellSize / rect.height;
+    float scaleX = (float)cellSize / rect.width;
+    float scaleY = (float)cellSize / rect.height;
     sprite->setScale(scaleX, scaleY);
     sprite->setRotation(90.0f * rotation);
-    Tile::update();
+    update();
 }
 
 void Tile::rotate(int steps)
@@ -77,7 +90,17 @@ void Tile::draw()
     Camera::window.draw(*sprite);
 }
 
+void Tile::setDisplacement(sf::Vector2f displace)
+{
+    displacement = displace;
+}
+
+Wall::Wall() : Tile::Tile()
+{
+    addTag("wall");
+}
+
 Wall::Wall(sf::Vector2f displace) : Tile::Tile(displace)
 {
-    tags.push_back("wall");
+    addTag("wall");
 }

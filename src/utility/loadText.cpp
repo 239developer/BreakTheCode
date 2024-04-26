@@ -14,7 +14,7 @@ void ObjectLoader::loadText(GameObject* parent, std::string line, std::string te
         sf::Text* text = new sf::Text();
         text->setFont(*font);
 
-        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 5);  // extracts 6 coordinates:
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 5);  // extracts 6 coordinates:
         const sf::Vector2f pos(v[0], v[1]);          // 2 for position
         unsigned int size = (unsigned int)v[2];      // 1 for font size (px)
         sf::Uint8 r = (sf::Uint8)v[3];               // 3 for color (r, g, b)

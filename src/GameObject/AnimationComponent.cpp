@@ -7,7 +7,7 @@ void AnimationComponent::setAnimation(sf::Image* t, std::vector<sf::IntRect> b, 
     textureBounds = b;
     timecodes = f;
     maxID = timecodes.size();
-    std::cout << f[0] << " " << timecodes[0] << " " << maxID << "\n";
+    // std::cout << f[0] << " " << timecodes[0] << " " << maxID << "\n";
     currentID = 0;
     currentFrame = 0;
 

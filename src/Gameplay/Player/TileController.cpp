@@ -1,27 +1,19 @@
 #include "TileController.h"
 #include "../Engine/Input.h"
 
-TileController::TileController(int cellSize, int gridSize_x, int gridSize_y)
+TileController::TileController(int cellSize, int gridSize_x, int gridSize_y, sf::Vector2f _displacement)
 {
     Tile::cellSize = cellSize;
     gridSize.x = gridSize_x;
     gridSize.y = gridSize_y;
+    displacement = _displacement;
 }
 
 void TileController::addTile(Tile* tile)
 {
+    tile->setDisplacement(displacement);
+    tile->setParent(parent);
     tiles.push_back(tile);
-}
-
-void TileController::update()
-{
-    if(    Input::getKeyDown(sf::Keyboard::Key::W)
-        || Input::getKeyDown(sf::Keyboard::Key::A)
-        || Input::getKeyDown(sf::Keyboard::Key::S)
-        || Input::getKeyDown(sf::Keyboard::Key::D))
-    {
-        nextTick();
-    }
 }
 
 std::vector<Tile*> TileController::tilesOn(int targetX, int targetY)
@@ -41,6 +33,19 @@ std::vector<Tile*> TileController::tilesOn(int targetX, int targetY, std::string
 {
     std::vector<Tile*> foundTiles;
     for(Tile* tile : tilesOn(targetX, targetY))
+    {
+        if(tile->hasTag(targetTag))
+        {
+            foundTiles.push_back(tile);
+        }
+    }
+    return foundTiles;
+}
+
+std::vector<Tile*> TileController::tilesWithTag(std::string targetTag)
+{
+    std::vector<Tile*> foundTiles;
+    for(Tile* tile : tiles)
     {
         if(tile->hasTag(targetTag))
         {
@@ -94,25 +99,21 @@ bool TileController::pushThing(Tile* thing, int direction)
     return pushThing(thing, direction, gridSize.x + gridSize.y);
 }
 
-void TileController::nextTick()
+void TileController::update()
 {
-    // player movement
-    int direction = 0;
-    if(Input::getKeyDown(sf::Keyboard::Key::W))
+    if(    Input::getKeyDown(sf::Keyboard::Key::W)
+        || Input::getKeyDown(sf::Keyboard::Key::A)
+        || Input::getKeyDown(sf::Keyboard::Key::S)
+        || Input::getKeyDown(sf::Keyboard::Key::D))
     {
-        direction = 0;
+        nextTick();
     }
-    else if(Input::getKeyDown(sf::Keyboard::Key::S))
+}
+
+void TileController::draw()
+{
+    for(Tile* tile : tiles)
     {
-        direction = 2;
+        tile->draw();
     }
-    else if(Input::getKeyDown(sf::Keyboard::Key::A))
-    {
-        direction = 3;
-    }
-    else if(Input::getKeyDown(sf::Keyboard::Key::D))
-    {
-        direction = 1;
-    }
-    
 }

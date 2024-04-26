@@ -16,7 +16,7 @@ void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vect
 
         for(std::string str : lines)
         {
-            std::vector<float> v = extractCoordinates(str, 0, 4);
+            std::vector<float> v = extractCoordinates(str, 4);
             sf::IntRect rect((int)v[1], (int)v[2], (int)v[3], (int)v[4]);
             int timecode = (int)v[0];
             textureBounds.push_back(rect);
@@ -24,7 +24,7 @@ void ObjectLoader::loadAnimation(GameObject* parent, std::string line, std::vect
         }
 
         component->setAnimation(image, textureBounds, timecodes);
-        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 0, 1);   // extracts just 2 coordinates representing position
+        std::vector<float> v = extractCoordinates(line.substr(line.find_first_of(" "), std::string::npos), 1);   // extracts just 2 coordinates representing position
         const sf::Vector2f pos(v[0], v[1]);
         component->getSprite()->setPosition(pos);
         component->setLoop(true);

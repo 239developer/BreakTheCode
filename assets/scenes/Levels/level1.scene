@@ -1,24 +1,8 @@
 LEVEL 1
 ->
-@ - 200 100
-g 10 10 7
-floor.png
-player.png
-wall.png
-button.png
-piston_head.png
-piston_base.png
-piston_rod.png
-crate.png
-win.png
-0 0 0 1 -1
-4 1 1 5 0
-5 2 0 2 -1
-3 3 0 2 -1
-5 3 0 2 -1
-4 4 0 2 -1
-3 2 0 7 0
-4 2 0 8 0
-4 1 1 4 0
-3 4 0 3 0
+s button-1.png 0 0 1 1
+b c main.scene
+=
+c 10 7 350 225
+q 1 1 0 player
 =

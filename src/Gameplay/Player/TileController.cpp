@@ -99,6 +99,15 @@ bool TileController::pushThing(Tile* thing, int direction)
     return pushThing(thing, direction, gridSize.x + gridSize.y);
 }
 
+void TileController::setFloor(sf::Texture* texture)
+{
+    floorTile = new Tile();
+    floorTile->addTag("floor");
+    floorTile->setTexture(texture);
+    floorTile->setDisplacement(displacement);
+    floorTile->setParent(parent);
+}
+
 void TileController::update()
 {
     if(    Input::getKeyDown(sf::Keyboard::Key::W)
@@ -112,6 +121,14 @@ void TileController::update()
 
 void TileController::draw()
 {
+    for(int x = 0; x < gridSize.x; x++)
+    {
+        for(int y = 0; y < gridSize.y; y++)
+        {
+            floorTile->setPosition(x, y);
+            floorTile->draw();
+        }
+    }
     for(Tile* tile : tiles)
     {
         tile->draw();

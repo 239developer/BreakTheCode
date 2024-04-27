@@ -40,8 +40,8 @@ void Clicker::set()
     {
         tiles[curr]->x = (int)sf::Mouse::getPosition().x / cell;        
         tiles[curr]->y = (int)sf::Mouse::getPosition().y / cell;        
-        std::cout << tiles[curr]->x << " " << tiles[curr]->y << " ";
-        std::cout << tiles[curr]->rotation << " " << tiles[curr]->id - 1 << " -1\n";
+        std::cout << "q " << tiles[curr]->x << " " << tiles[curr]->y << " ";
+        std::cout << tiles[curr]->rotation << " " << getName(tiles[curr]->id) << " -1\n";
         curr = -1;
     }
 }

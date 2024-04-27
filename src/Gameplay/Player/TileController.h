@@ -5,6 +5,7 @@
 class TileController : public Component
 {
     private:
+        Tile* floorTile = new Tile();
         int tickLength = 5; // object updates per game tick
         int tickCounter = 0;
         std::vector<Tile*> tiles;
@@ -24,4 +25,5 @@ class TileController : public Component
         virtual void update() override;
         virtual void draw() override;
         void nextTick(); // game update (when player pressed a button)
+        void setFloor(sf::Texture*);
 };

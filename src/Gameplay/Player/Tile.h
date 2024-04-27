@@ -36,3 +36,10 @@ class Wall : virtual public Tile
         Wall();
         Wall(sf::Vector2f);
 };
+
+class WinTile : virtual public Tile
+{
+    public:
+        WinTile();
+        WinTile(sf::Vector2f);
+};

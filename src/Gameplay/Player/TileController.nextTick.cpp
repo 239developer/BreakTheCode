@@ -1,6 +1,7 @@
 #include "TileController.h"
 #include "../Engine/Input.h"
 #include "Piston.h"
+#include "LevelManager.h"
 
 void TileController::nextTick()
 {
@@ -49,5 +50,14 @@ void TileController::nextTick()
     {
         Piston* piston = dynamic_cast<Piston*>(tile);
         piston->extend(piston->isActive());
+    }
+
+    // check if we won
+    for(Tile* tile : tilesWithTag("win"))
+    {
+        if(hasTile(tile->x, tile->y, "player"))
+        {
+            LevelManager::loadNext();
+        }
     }
 }

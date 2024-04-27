@@ -6,7 +6,8 @@ std::string ObjectLoader::getStringFromLine(std::string& str)
     const size_t n = str.find_first_not_of(" ");
     str = str.substr(n);
     std::string exit = str.substr(0, str.find_first_of(" "));
-    // str = str.substr(str.find_first_of(" "));
+    const size_t m = str.find_first_of(" ");
+    str = str.substr(m == std::string::npos ? 0 : m);
     return exit;
 }
 
@@ -70,9 +71,9 @@ std::vector<int> ObjectLoader::extractIntCoordinates(std::string& str, int count
         std::size_t const m = str.find_first_not_of(digits, n);
         std::string x = str.substr(n, m != std::string::npos ? m-n : m);
         coordinates.push_back(std::stoi(x));
-        // std::cout << count << " " << std::stoi(x) << " ... " << str << " ... ";
-        str = str.substr(m);
-        // std::cout << str << " \n";
+        std::cout << count << " " << std::stoi(x) << " ... " << str << " ... ";
+        str = str.substr(m == std::string::npos ? 0 : m);
+        std::cout << str << " \n";
         std::vector<int> nextCoordinates = extractIntCoordinates(str, count - 1);
         coordinates.insert(coordinates.end(), nextCoordinates.begin(), nextCoordinates.end());
     }

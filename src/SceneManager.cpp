@@ -92,6 +92,7 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                     switch(c)
                     {   
                         case END_OBJECT:
+                            std::cout << "Created a new GameObject";
                             scene->objects.push_back(nextObj);
                             nextObj = new GameObject();
                             break;
@@ -131,6 +132,8 @@ std::shared_ptr<Scene> SceneManager::createSceneFromFile(std::string filePath)
                         case LOAD_TILE:
                             // nextLine = nextLine.substr(1);
                             ObjectLoader::loadTile(nextObj, nextLine);
+                            std::cout << "Created a new Tile";
+
                             break;
                     }
                     break;

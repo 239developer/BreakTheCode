@@ -11,6 +11,7 @@ void ObjectLoader::loadTileController(GameObject* parent, std::string line)
         displacement.x = v[2];
         displacement.y = v[3];
         TileController* component = new TileController(128, (int)v[0], (int)v[1], displacement);
+        component->setFloor(loadTexture("tiles/floor.png"));
         std::cout << "Loaded a TileController\n";
         parent->addComponent(component);
     }

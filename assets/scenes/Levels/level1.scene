@@ -1,8 +1,22 @@
 LEVEL 1
 ->
+s bg-2.png 0 0 1 1
+=
 s button-1.png 0 0 1 1
+t Ubuntu/Ubuntu-Regular.ttf 60 12 80 30 30 30
+Main Menu
 b c main.scene
 =
-c 10 7 350 225
+c 10 7 384 225
 q 1 1 0 player
+q 4 3 0 win
+q 3 3 0 crate
+q 5 3 0 wall
+q 5 4 0 wall
+q 4 5 0 wall
+q 3 4 0 wall
+q 3 5 0 wall
+q 5 5 0 wall
+q 4 2 1 piston 0 1 1
+q 5 2 0 button 1
 =

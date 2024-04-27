@@ -10,16 +10,18 @@ t Ubuntu/Ubuntu-Regular.ttf 860 512 80 100 10 0
 PLAY
 =
 s button-1.png 700 700 1 1
-b c settings.scene
-t Ubuntu/Ubuntu-Regular.ttf 800 712 80 0 0 0
-SETTINGS
-=
-s button-1.png 700 900 1 1
-t Ubuntu/Ubuntu-Regular.ttf 860 912 80 0 0 0
+t Ubuntu/Ubuntu-Regular.ttf 860 712 80 0 0 0
 QUIT
+b c intendedCrash.scene
 =
 a 3 garland.png 0 0
 30 0 0 1920 200
 60 0 200 1920 200
 90 0 400 1920 200
+=
+->
+s button-1.png 700 900 1 1
+b c settings.scene
+t Ubuntu/Ubuntu-Regular.ttf 800 912 80 0 0 0
+SETTINGS
 =

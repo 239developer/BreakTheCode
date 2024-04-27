@@ -104,3 +104,13 @@ Wall::Wall(sf::Vector2f displace) : Tile::Tile(displace)
 {
     addTag("wall");
 }
+
+WinTile::WinTile() : Tile::Tile()
+{
+    addTag("win");
+}
+
+WinTile::WinTile(sf::Vector2f displace) : Tile::Tile(displace)
+{
+    addTag("win");
+}

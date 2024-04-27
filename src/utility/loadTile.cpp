@@ -20,7 +20,7 @@ void ObjectLoader::loadTile(GameObject* parent, std::string line)
         {
             wall->setTexture(loadTexture("tiles/wall.png"));
             controller->addTile(wall);
-            tile = wall;
+            finalTile = wall;
         }
         else if(name == "piston")
         {
@@ -30,7 +30,7 @@ void ObjectLoader::loadTile(GameObject* parent, std::string line)
             piston = new Piston(pistonInfo[0], pistonInfo[1], pistonInfo[2], *wall, *tile);
             piston->setTexture(loadTexture("tiles/piston_base.png"));
             controller->addTile(piston);
-            tile = piston;
+            finalTile = piston;
         }
         else if(name == "player")
         {
@@ -48,9 +48,17 @@ void ObjectLoader::loadTile(GameObject* parent, std::string line)
             controller->addTile(tile);
             finalTile = tile;
         }
+        else if(name == "win")
+        {
+            tile = new WinTile();
+            tile->setTexture(loadTexture("tiles/win.png"));
+            controller->addTile(tile);
+            finalTile = tile;
+        }
         else if(name == "button")
         {
-            button = new ButtonTile(extractIntCoordinates(line, 0)[0]);
+            std::vector<int> x = extractIntCoordinates(line, 0);
+            button = new ButtonTile(x[0]);
             button->setTexture(loadTexture("tiles/button.png"));
             controller->addTile(button);
             finalTile = button;
@@ -61,6 +69,6 @@ void ObjectLoader::loadTile(GameObject* parent, std::string line)
     }
     else
     {
-        std::cout << "Tried to load a tile but a TileController was not found\n";
+        std::cout << "Tried to load a tile but no TileController was not found\n";
     }
 }
